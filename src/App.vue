@@ -33,8 +33,8 @@
         <!-- Hero Section Responsive -->
         <section class="hero-responsive py-4 py-md-8">
           <v-row justify="center">
-            <v-col cols="12" md="8" lg="6" class="text-center">
-              <h1 class="hero-title text-h3 text-md-h2 text-lg-h1 mb-3 mb-md-4">
+            <v-col cols="12" md="10" lg="8" class="text-center">
+              <h1 class="hero-title mb-3 mb-md-4">
                 Explora Nuestro Directorio
               </h1>
               <p class="hero-subtitle text-body-1 text-md-h6 mb-6 mb-md-8">
@@ -323,6 +323,8 @@ defineExpose({
   );
   border-radius: 16px;
   margin-bottom: 32px;
+  padding: 16px;
+  margin-top: 100px;
 }
 
 .hero-title {
@@ -336,13 +338,21 @@ defineExpose({
   -webkit-text-fill-color: transparent;
   font-weight: 800;
   line-height: 1.2;
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
+  word-wrap: break-word;
+  hyphens: auto;
+  text-align: center;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .hero-subtitle {
   color: rgba(var(--v-theme-on-surface), 0.7);
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  font-size: clamp(0.9rem, 2.5vw, 1.25rem);
+  padding: 0 16px;
 }
 
 /* Stats section */
@@ -416,7 +426,16 @@ defineExpose({
 @media (max-width: 960px) {
   .hero-responsive {
     margin-bottom: 24px;
-    padding: 24px 16px;
+    padding: 20px 16px;
+  }
+  
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+  
+  .hero-subtitle {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    padding: 0 12px;
   }
   
   .user-list-section {
@@ -437,13 +456,37 @@ defineExpose({
     font-size: 1rem !important;
   }
   
+  .hero-responsive {
+    padding: 16px 8px;
+    margin-bottom: 20px;
+  }
+  
   .hero-title {
-    font-size: 1.75rem !important;
+    font-size: clamp(1.3rem, 7vw, 2rem) !important;
     line-height: 1.3;
+    word-break: break-word;
   }
   
   .hero-subtitle {
-    font-size: 1rem !important;
+    font-size: clamp(0.85rem, 4vw, 1rem) !important;
+    padding: 0 8px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-responsive {
+    padding: 12px 4px;
+  }
+  
+  .hero-title {
+    font-size: clamp(1.1rem, 8vw, 1.6rem) !important;
+    line-height: 1.4;
+  }
+  
+  .hero-subtitle {
+    font-size: clamp(0.8rem, 4.5vw, 0.95rem) !important;
+    padding: 0 4px;
   }
 }
 

@@ -1,5 +1,8 @@
 // 🎨 Variables y tokens de diseño - Directorio de Usuarios
 
+// Importar módulos de Sass
+@use "sass:map";
+
 /* ========================================
    COLORES DEL TEMA
    ======================================== */
@@ -213,8 +216,8 @@ $breakpoints: (
 
 // Mixins para breakpoints
 @mixin respond-to($breakpoint) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    $breakpoint-value: map-get($breakpoints, $breakpoint);
+  @if map.has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map.get($breakpoints, $breakpoint);
     @if $breakpoint-value == 0 {
       @content;
     } @else {
@@ -228,8 +231,8 @@ $breakpoints: (
 }
 
 @mixin respond-below($breakpoint) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    $breakpoint-value: map-get($breakpoints, $breakpoint);
+  @if map.has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map.get($breakpoints, $breakpoint);
     @media (max-width: calc($breakpoint-value - 1px)) {
       @content;
     }

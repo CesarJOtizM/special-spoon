@@ -1,6 +1,6 @@
 // ✨ Sistema de animaciones - Directorio de Usuarios
 
-@import "./variables.scss";
+@use "./variables.scss" as *;
 
 /* ========================================
    ANIMACIONES BASE

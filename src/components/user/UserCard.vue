@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="user-card hover-lift card-enhanced"
+    class="user-card hover-lift card-enhanced square-card"
     :class="{ 'v-card--hover': true }"
     elevation="2"
     @click="$emit('openModal', user)"
@@ -110,7 +110,7 @@ const avatarUrl = computed(() => {
 
 // 📏 Tamaño responsive del avatar
 const avatarSize = computed(() => {
-  return mobile.value ? 56 : 64
+  return mobile.value ? 60 : 72
 })
 
 // 🎯 Manejar click en la tarjeta
@@ -131,6 +131,7 @@ const handleViewMore = () => {
 .user-card {
   cursor: pointer;
   height: 100%;
+  min-height: 340px; /* Aumentar altura mínima para dar más espacio */
   display: flex;
   flex-direction: column;
   border-radius: var(--border-radius-lg) !important;
@@ -138,6 +139,13 @@ const handleViewMore = () => {
   background: rgb(var(--v-theme-surface));
   border: 1px solid rgba(var(--v-theme-outline), 0.1);
   transition: all var(--duration-normal) var(--ease-in-out);
+  /* Removemos aspect-ratio para permitir que el contenido determine la altura */
+}
+
+/* Modificador para tarjetas cuadradas */
+.square-card {
+  max-width: 280px; /* Ancho máximo para mantener proporción cuadrada */
+  margin: 0 auto; /* Centrar la tarjeta */
 }
 
 .user-card:hover {
@@ -149,7 +157,7 @@ const handleViewMore = () => {
 /* Header styles */
 .user-card-header {
   position: relative;
-  padding: var(--spacing-xl) var(--spacing-lg);
+  padding: var(--spacing-lg);
   background: linear-gradient(
     135deg,
     rgba(var(--v-theme-primary), 0.05),
@@ -159,11 +167,16 @@ const handleViewMore = () => {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  flex: 0 0 auto; /* No crecer ni encogerse, tamaño automático */
+  min-height: 180px; /* Altura mínima fija para el header */
+  justify-content: center; /* Centrar verticalmente */
 }
 
 .user-avatar-wrapper {
   position: relative;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
 }
 
 .user-avatar {
@@ -189,6 +202,7 @@ const handleViewMore = () => {
 
 .user-info {
   width: 100%;
+  text-align: center; /* Centrar todo el texto */
 }
 
 .user-name {
@@ -203,54 +217,56 @@ const handleViewMore = () => {
   color: rgba(var(--v-theme-on-surface), 0.7);
   font-size: var(--font-size-sm);
   margin-bottom: var(--spacing-xs);
+  line-height: var(--line-height-normal);
 }
 
 .user-username {
   color: rgba(var(--v-theme-on-surface), 0.6);
   font-size: var(--font-size-xs);
   font-family: var(--font-family-mono);
-  margin: 0;
+  line-height: var(--line-height-normal);
 }
 
 /* Content styles */
 .user-card-content {
-  padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-xl) var(--spacing-lg) !important;
-  flex: 1;
+  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  flex: 1; /* Tomar el espacio restante */
+  min-height: 120px; /* Altura mínima para asegurar espacio para el botón */
+  text-align: center; /* Centrar contenido */
 }
 
 .user-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-lg);
-  justify-content: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+  justify-content: center; /* Centrar los chips */
+  flex: 0 0 auto; /* No crecer ni encogerse */
 }
 
-.company-tag {
-  background: rgba(var(--v-theme-primary), 0.1) !important;
-  color: rgb(var(--v-theme-primary)) !important;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-}
-
-.location-tag {
-  background: rgba(var(--v-theme-secondary), 0.1) !important;
-  color: rgb(var(--v-theme-secondary)) !important;
+.user-tags .v-chip {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
 }
 
 .user-actions {
-  margin-top: auto;
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: auto; /* Empujar al final */
+  flex: 0 0 auto; /* No crecer ni encogerse */
+  padding-top: var(--spacing-sm); /* Espacio adicional arriba del botón */
 }
 
 .action-button {
-  min-height: var(--button-height-md);
-  border-radius: var(--border-radius-md) !important;
+  min-height: 44px; /* Aumentar altura mínima del botón */
+  border-radius: var(--border-radius-md);
   font-weight: var(--font-weight-medium);
   transition: all var(--duration-normal) var(--ease-in-out);
+  font-size: var(--font-size-sm);
+  white-space: nowrap; /* Evitar que el texto se corte */
 }
 
 .action-button:hover {
@@ -258,57 +274,51 @@ const handleViewMore = () => {
   box-shadow: var(--elevation-2);
 }
 
-/* Animaciones */
-.user-card {
-  animation: fadeInUp var(--duration-slow) var(--ease-out);
+/* Texto ellipsis */
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
-.card-enhanced {
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-/* Responsive */
-@media (max-width: 599px) {
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .square-card {
+    max-width: 100%;
+    min-height: 300px; /* Altura mínima en móviles */
+  }
+  
   .user-card-header {
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-md);
+    min-height: 160px; /* Altura mínima del header en móviles */
   }
   
   .user-card-content {
-    padding: var(--spacing-lg) var(--spacing-md) !important;
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+    min-height: 100px; /* Altura mínima del contenido en móviles */
   }
   
-  .user-card:hover {
-    transform: translateY(-2px);
-  }
-  
-  .user-name {
-    font-size: var(--font-size-base);
-  }
-  
-  .user-avatar-wrapper {
-    margin-bottom: var(--spacing-md);
-  }
-}
-
-/* Accesibilidad */
-.user-card:focus-visible {
-  outline: 2px solid rgb(var(--v-theme-primary));
-  outline-offset: 2px;
-  border-radius: var(--border-radius-md);
-}
-
-/* Estados de loading */
-.v-overlay {
-  border-radius: var(--border-radius-lg);
-}
-
-/* Optimizaciones de performance */
-@media (prefers-reduced-motion: reduce) {
-  .user-card,
-  .user-avatar,
   .action-button {
-    transition: none;
+    min-height: 40px; /* Altura del botón en móviles */
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Asegurar que en pantallas muy pequeñas el botón sea visible */
+@media (max-width: 400px) {
+  .user-card {
+    min-height: 280px;
+  }
+  
+  .user-card-header {
+    min-height: 140px;
+    padding: var(--spacing-sm);
+  }
+  
+  .user-card-content {
+    min-height: 90px;
+    padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-sm);
   }
 }
 </style> 

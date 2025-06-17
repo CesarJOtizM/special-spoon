@@ -1,6 +1,6 @@
 // 📱 Sistema responsive - Directorio de Usuarios
 
-@import "./variables.scss";
+@use "./variables.scss" as *;
 
 /* ========================================
    GRID SYSTEM RESPONSIVE

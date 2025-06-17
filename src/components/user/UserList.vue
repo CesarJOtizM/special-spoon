@@ -142,7 +142,7 @@
     </v-row>
 
     <!-- Grid de usuarios -->
-    <v-row v-else-if="userCount > 0" justify="center" class="user-cards-grid">
+    <v-row v-else-if="userCount > 0" class="user-grid justify-center">
       <v-col
         v-for="user in filteredUsers"
         :key="user.id"
@@ -158,7 +158,6 @@
           :loading="loading"
           @open-modal="openUserModal"
           @click="handleUserClick"
-          class="w-100"
         />
       </v-col>
     </v-row>
@@ -300,24 +299,18 @@ onMounted(async () => {
   min-height: 60vh;
 }
 
-/* Grid de tarjetas centrado y con mejor espaciado */
-.user-cards-grid {
-  margin: 0 auto;
-  max-width: 1400px;
+/* Grid de usuarios mejorado */
+.user-grid {
+  display: flex;
+  justify-content: center;
   gap: var(--spacing-lg);
 }
 
-.user-cards-grid .v-col {
-  padding: var(--spacing-md);
+.user-grid .v-col {
   display: flex;
   justify-content: center;
-}
-
-/* Asegurar que las tarjetas tengan el mismo alto */
-.user-cards-grid .user-card {
-  width: 100%;
-  max-width: 350px;
-  margin: 0 auto;
+  align-items: stretch;
+  max-width: 300px; /* Limitar ancho máximo de columnas */
 }
 
 /* Animaciones de entrada escalonadas */
@@ -342,15 +335,11 @@ onMounted(async () => {
     padding: 8px 16px;
   }
   
-  .user-cards-grid {
+  .user-grid {
     gap: var(--spacing-md);
   }
   
-  .user-cards-grid .v-col {
-    padding: var(--spacing-sm);
-  }
-  
-  .user-cards-grid .user-card {
+  .user-grid .v-col {
     max-width: 100%;
   }
 }
@@ -361,15 +350,8 @@ onMounted(async () => {
     margin: 0 auto;
   }
   
-  .user-cards-grid {
-    gap: var(--spacing-xl);
-  }
-}
-
-/* Responsive del grid para centrar mejor */
-@media (min-width: 1264px) {
-  .user-cards-grid .v-col {
-    max-width: 300px;
+  .user-grid .v-col {
+    max-width: 280px;
   }
 }
 
@@ -392,8 +374,12 @@ onMounted(async () => {
   backdrop-filter: blur(2px);
 }
 
-/* Centrar el contenido cuando hay pocas tarjetas */
-.user-cards-grid:has(.v-col:nth-child(-n+3)) {
-  justify-content: center;
+/* Mejor centrado para pantallas grandes */
+@media (min-width: 1400px) {
+  .user-grid {
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }
 </style> 

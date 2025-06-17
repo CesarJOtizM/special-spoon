@@ -1,6 +1,6 @@
 // 🧩 Estilos específicos de componentes - Directorio de Usuarios
 
-@import "./variables.scss";
+@use "./variables.scss" as *;
 
 /* ========================================
    COMPONENTES DE CARGA
@@ -67,6 +67,9 @@
   transition: all var(--duration-normal) var(--ease-in-out);
   background: rgb(var(--v-theme-surface));
   border: 1px solid rgba(var(--v-theme-outline), 0.1);
+  min-height: 340px;
+  max-width: 280px;
+  margin: 0 auto;
 
   &:hover {
     transform: translateY(-4px);
@@ -82,10 +85,18 @@
       rgba(var(--v-theme-primary), 0.05),
       rgba(var(--v-theme-secondary), 0.05)
     );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 0 0 auto;
+    min-height: 180px;
+    justify-content: center;
 
     .user-avatar-wrapper {
       position: relative;
-      display: inline-block;
+      display: flex;
+      justify-content: center;
       margin-bottom: var(--spacing-md);
 
       .user-avatar {
@@ -107,6 +118,9 @@
     }
 
     .user-info {
+      width: 100%;
+      text-align: center;
+
       .user-name {
         font-size: var(--font-size-lg);
         font-weight: var(--font-weight-semibold);
@@ -119,24 +133,34 @@
         color: rgba(var(--v-theme-on-surface), 0.7);
         font-size: var(--font-size-sm);
         margin-bottom: var(--spacing-xs);
+        line-height: var(--line-height-normal);
       }
 
       .user-username {
         color: rgba(var(--v-theme-on-surface), 0.6);
         font-size: var(--font-size-xs);
         font-family: var(--font-family-mono);
+        line-height: var(--line-height-normal);
       }
     }
   }
 
   .user-card-content {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    min-height: 120px;
+    text-align: center;
 
     .user-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-xs);
       margin-bottom: var(--spacing-md);
+      justify-content: center;
+      flex: 0 0 auto;
 
       .user-tag {
         font-size: var(--font-size-xs);
@@ -159,19 +183,64 @@
     .user-actions {
       display: flex;
       gap: var(--spacing-sm);
+      margin-top: auto;
+      flex: 0 0 auto;
+      padding-top: var(--spacing-sm);
 
       .action-button {
         flex: 1;
-        min-height: var(--button-height-md);
+        min-height: 44px;
         border-radius: var(--border-radius-md);
         font-weight: var(--font-weight-medium);
+        font-size: var(--font-size-sm);
         transition: all var(--duration-normal) var(--ease-in-out);
+        white-space: nowrap;
 
         &:hover {
           transform: translateY(-1px);
           box-shadow: var(--elevation-2);
         }
       }
+    }
+  }
+}
+
+/* Responsive adjustments para tarjetas */
+@media (max-width: 600px) {
+  .user-card-enhanced {
+    max-width: 100%;
+    min-height: 300px;
+
+    .user-card-header {
+      padding: var(--spacing-md);
+      min-height: 160px;
+    }
+
+    .user-card-content {
+      padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+      min-height: 100px;
+    }
+
+    .user-actions .action-button {
+      min-height: 40px;
+      font-size: var(--font-size-xs);
+    }
+  }
+}
+
+/* Asegurar que en pantallas muy pequeñas el botón sea visible */
+@media (max-width: 400px) {
+  .user-card-enhanced {
+    min-height: 280px;
+
+    .user-card-header {
+      min-height: 140px;
+      padding: var(--spacing-sm);
+    }
+
+    .user-card-content {
+      min-height: 90px;
+      padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-sm);
     }
   }
 }
