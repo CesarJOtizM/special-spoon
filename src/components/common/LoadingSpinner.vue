@@ -1,26 +1,40 @@
 <template>
   <div class="loading-spinner-container">
-    <v-progress-circular
-      :size="size"
-      :width="width"
-      :color="color"
-      indeterminate
-      class="loading-spinner mb-4"
-    />
-    
-    <div v-if="title" class="loading-text">
-      {{ title }}
+    <!-- Skeleton Mode -->
+    <div v-if="skeleton" class="skeleton-container">
+      <div v-for="item in skeletonCount" :key="item" class="skeleton-item">
+        <v-skeleton-loader
+          :type="skeletonType"
+          :loading="true"
+          class="mb-3"
+        />
+      </div>
     </div>
     
-    <div v-if="subtitle" class="loading-subtitle">
-      {{ subtitle }}
-    </div>
-    
-    <!-- Dots animados opcionales -->
-    <div v-if="showDots" class="loading-dots mt-2">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
+    <!-- Normal Spinner Mode -->
+    <div v-else class="spinner-content">
+      <v-progress-circular
+        :size="size"
+        :width="width"
+        :color="color"
+        indeterminate
+        class="loading-spinner mb-4"
+      />
+      
+      <div v-if="title" class="loading-text">
+        {{ title }}
+      </div>
+      
+      <div v-if="subtitle" class="loading-subtitle">
+        {{ subtitle }}
+      </div>
+      
+      <!-- Dots animados opcionales -->
+      <div v-if="showDots" class="loading-dots mt-2">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +47,9 @@ interface Props {
   title?: string
   subtitle?: string
   showDots?: boolean
+  skeleton?: boolean
+  skeletonType?: string
+  skeletonCount?: number
 }
 
 withDefaults(defineProps<Props>(), {
@@ -41,7 +58,10 @@ withDefaults(defineProps<Props>(), {
   color: 'primary',
   title: 'Cargando...',
   subtitle: '',
-  showDots: false
+  showDots: false,
+  skeleton: false,
+  skeletonType: 'card',
+  skeletonCount: 3
 })
 </script>
 
@@ -54,6 +74,21 @@ withDefaults(defineProps<Props>(), {
   min-height: 200px;
   padding: var(--spacing-xl);
   text-align: center;
+}
+
+.spinner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skeleton-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.skeleton-item {
+  margin-bottom: 16px;
 }
 
 .loading-spinner {
