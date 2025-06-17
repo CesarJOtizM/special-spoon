@@ -1,70 +1,66 @@
 <template>
   <v-card
-    class="user-card"
-    :class="{ 'user-card--mobile': $vuetify.display.mobile }"
+    class="user-card hover-lift card-enhanced"
+    :class="{ 'v-card--hover': true }"
     elevation="2"
-    hover
-    @click="handleCardClick"
+    @click="$emit('openModal', user)"
   >
-    <v-card-text class="pa-4">
-      <!-- Avatar y información básica -->
-      <div class="d-flex align-center mb-3">
+    <!-- Header de la card -->
+    <div class="user-card-header">
+      <div class="user-avatar-wrapper">
         <v-avatar
           :image="avatarUrl"
           :size="avatarSize"
-          class="mr-4 user-avatar"
-        >
-          <v-icon v-if="!avatarUrl" icon="mdi-account" />
-        </v-avatar>
-        
-        <div class="flex-grow-1 min-width-0">
-          <h3 class="text-h6 text-truncate mb-1">
-            {{ user.name }}
-          </h3>
-          <p class="text-body-2 text-medium-emphasis text-truncate mb-1">
-            {{ user.email }}
-          </p>
-          <p class="text-caption text-medium-emphasis text-truncate">
-            @{{ user.username }}
-          </p>
-        </div>
+          class="user-avatar"
+        />
+        <div class="user-status-indicator" />
       </div>
+      
+      <div class="user-info">
+        <h3 class="user-name text-ellipsis">{{ user.name }}</h3>
+        <p class="user-email text-ellipsis">{{ user.email }}</p>
+        <p class="user-username text-ellipsis">@{{ user.username }}</p>
+      </div>
+    </div>
 
-      <!-- Información adicional -->
-      <div class="user-info mb-3">
+    <!-- Contenido de la card -->
+    <v-card-text class="user-card-content">
+      <!-- Tags de información -->
+      <div class="user-tags">
         <v-chip
-          v-if="user.company?.name"
           size="small"
-          variant="tonal"
           color="primary"
-          class="mr-2 mb-1"
-          prepend-icon="mdi-office-building"
+          variant="tonal"
+          class="company-tag"
         >
-          {{ user.company.name }}
+          <v-icon start size="16">mdi-office-building</v-icon>
+          {{ user.company?.name }}
         </v-chip>
         
         <v-chip
-          v-if="user.address?.city"
           size="small"
-          variant="tonal"
           color="secondary"
-          class="mb-1"
-          prepend-icon="mdi-map-marker"
+          variant="tonal"
+          class="location-tag"
         >
-          {{ user.address.city }}
+          <v-icon start size="16">mdi-map-marker</v-icon>
+          {{ user.address?.city }}
         </v-chip>
       </div>
 
-      <!-- Botón de acción -->
-      <v-btn
-        variant="outlined"
-        color="primary"
-        block
-        prepend-icon="mdi-eye"
-        @click.stop="handleViewMore"
-      >
-        Ver más detalles
-      </v-btn>
+      <!-- Acciones -->
+      <div class="user-actions">
+        <v-btn
+          variant="outlined"
+          color="primary"
+          block
+          class="action-button"
+          @click.stop="$emit('openModal', user)"
+        >
+          <v-icon start>mdi-eye</v-icon>
+          Ver detalles
+        </v-btn>
+      </div>
     </v-card-text>
 
     <!-- Indicador de carga -->
@@ -131,67 +127,163 @@ const handleViewMore = () => {
 </script>
 
 <style scoped>
+/* Base card styles */
 .user-card {
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
   display: flex;
   flex-direction: column;
+  border-radius: var(--border-radius-lg) !important;
+  overflow: hidden;
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgba(var(--v-theme-outline), 0.1);
+  transition: all var(--duration-normal) var(--ease-in-out);
 }
 
 .user-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: var(--elevation-3);
+  border-color: rgba(var(--v-theme-primary), 0.2);
 }
 
-.user-card--mobile {
-  margin-bottom: 12px;
+/* Header styles */
+.user-card-header {
+  position: relative;
+  padding: var(--spacing-lg);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--v-theme-primary), 0.05),
+    rgba(var(--v-theme-secondary), 0.05)
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.user-avatar-wrapper {
+  position: relative;
+  margin-bottom: var(--spacing-md);
 }
 
 .user-avatar {
-  border: 2px solid rgba(var(--v-theme-primary), 0.1);
-  transition: border-color 0.3s ease;
+  border: 3px solid rgba(var(--v-theme-primary), 0.2);
+  transition: border-color var(--duration-normal) ease;
+  box-shadow: var(--elevation-1);
 }
 
 .user-card:hover .user-avatar {
-  border-color: rgba(var(--v-theme-primary), 0.3);
+  border-color: rgba(var(--v-theme-primary), 0.4);
+}
+
+.user-status-indicator {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgb(var(--v-theme-surface));
+  background: rgb(var(--v-theme-success));
 }
 
 .user-info {
-  min-height: 32px;
+  width: 100%;
+}
+
+.user-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: var(--spacing-xs);
+  line-height: var(--line-height-tight);
+}
+
+.user-email {
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.user-username {
+  color: rgba(var(--v-theme-on-surface), 0.6);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  margin: 0;
+}
+
+/* Content styles */
+.user-card-content {
+  padding: var(--spacing-lg) !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-tags {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  justify-content: center;
 }
 
-/* Animación de entrada */
+.company-tag {
+  background: rgba(var(--v-theme-primary), 0.1) !important;
+  color: rgb(var(--v-theme-primary)) !important;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.location-tag {
+  background: rgba(var(--v-theme-secondary), 0.1) !important;
+  color: rgb(var(--v-theme-secondary)) !important;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.user-actions {
+  margin-top: auto;
+}
+
+.action-button {
+  min-height: var(--button-height-md);
+  border-radius: var(--border-radius-md) !important;
+  font-weight: var(--font-weight-medium);
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--elevation-2);
+}
+
+/* Animaciones */
 .user-card {
-  animation: slideInUp 0.3s ease-out;
+  animation: fadeInUp var(--duration-slow) var(--ease-out);
 }
 
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.card-enhanced {
+  will-change: transform;
+  transform: translateZ(0);
 }
 
-/* Optimizaciones móviles */
-@media (max-width: 600px) {
-  .user-card {
-    margin-bottom: 8px;
+/* Responsive */
+@media (max-width: 599px) {
+  .user-card-header {
+    padding: var(--spacing-md);
   }
   
-  .user-card .v-card-text {
-    padding: 12px !important;
+  .user-card-content {
+    padding: var(--spacing-md) !important;
   }
   
   .user-card:hover {
     transform: translateY(-2px);
+  }
+  
+  .user-name {
+    font-size: var(--font-size-base);
   }
 }
 
@@ -199,10 +291,20 @@ const handleViewMore = () => {
 .user-card:focus-visible {
   outline: 2px solid rgb(var(--v-theme-primary));
   outline-offset: 2px;
+  border-radius: var(--border-radius-md);
 }
 
-/* Prevenir overflow en textos largos */
-.min-width-0 {
-  min-width: 0;
+/* Estados de loading */
+.v-overlay {
+  border-radius: var(--border-radius-lg);
+}
+
+/* Optimizaciones de performance */
+@media (prefers-reduced-motion: reduce) {
+  .user-card,
+  .user-avatar,
+  .action-button {
+    transition: none;
+  }
 }
 </style> 

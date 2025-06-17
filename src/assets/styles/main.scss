@@ -1,17 +1,49 @@
-// 🎨 Estilos globales para la aplicación
+// 🎨 Estilos globales para la aplicación - Directorio de Usuarios
 @import "vuetify/styles";
+@import "./variables.scss";
+@import "./responsive.scss";
+@import "./animations.scss";
+@import "./components.scss";
 
-// Variables personalizadas
-:root {
-  --primary-color: #1976d2;
-  --secondary-color: #424242;
-  --success-color: #4caf50;
-  --error-color: #f44336;
+/* ========================================
+   CONFIGURACIÓN BASE
+   ======================================== */
+
+* {
+  box-sizing: border-box;
 }
 
-// Utilidades responsive
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  background-color: rgb(var(--v-theme-background));
+  color: rgb(var(--v-theme-on-background));
+}
+
+/* ========================================
+   UTILIDADES GLOBALES
+   ======================================== */
+
+// Utilidades de visibility responsive
 .mobile-only {
   @media (min-width: 960px) {
+    display: none !important;
+  }
+}
+
+.tablet-only {
+  @media (max-width: 599px), (min-width: 1264px) {
     display: none !important;
   }
 }
@@ -22,28 +54,50 @@
   }
 }
 
-// Animaciones
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
+.tablet-up {
+  @media (max-width: 599px) {
+    display: none !important;
+  }
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+.desktop-up {
+  @media (max-width: 959px) {
+    display: none !important;
+  }
 }
 
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition: transform 0.3s ease;
+// Utilidades de texto
+.text-balance {
+  text-wrap: balance;
 }
 
-.slide-up-enter-from,
-.slide-up-leave-to {
-  transform: translateY(20px);
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-// Mejoras de accesibilidad
+.text-shadow {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+// Utilidades de spacing responsive
+.spacing-responsive {
+  padding: var(--spacing-lg);
+
+  @media (max-width: 960px) {
+    padding: var(--spacing-md);
+  }
+
+  @media (max-width: 600px) {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* ========================================
+   MEJORAS DE ACCESIBILIDAD
+   ======================================== */
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -56,13 +110,226 @@
   border: 0;
 }
 
-// Responsive breakpoints personalizados
-.container-responsive {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
+// Focus visible mejorado
+:focus-visible {
+  outline: 2px solid rgb(var(--v-theme-primary));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
 
-  @media (max-width: 600px) {
-    padding: 0 8px;
+// Reduce motion para usuarios que lo prefieren
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
+}
+
+/* ========================================
+   SCROLLBAR PERSONALIZADA
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(var(--v-theme-surface-variant), 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--v-theme-primary), 0.3);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(var(--v-theme-primary), 0.5);
+  }
+}
+
+// Firefox scrollbar
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--v-theme-primary), 0.3) transparent;
+}
+
+/* ========================================
+   LAYOUT PRINCIPAL
+   ======================================== */
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+}
+
+/* ========================================
+   ESTADOS DE CARGA Y ERROR
+   ======================================== */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: var(--spacing-xl);
+}
+
+.error-container {
+  text-align: center;
+  padding: var(--spacing-xl);
+
+  .error-icon {
+    font-size: 4rem;
+    color: rgb(var(--v-theme-error));
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl);
+
+  .empty-icon {
+    font-size: 4rem;
+    color: rgb(var(--v-theme-surface-variant));
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+/* ========================================
+   CARDS Y ELEVATION
+   ======================================== */
+
+.card-elevated {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 16px 32px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* ========================================
+   OVERRIDES DE VUETIFY
+   ======================================== */
+
+// Mejorar spacing en v-container
+.v-container {
+  &.container-fluid {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+}
+
+// Mejorar v-card
+.v-card {
+  border-radius: var(--border-radius-lg) !important;
+
+  &.v-card--hover {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Mejorar v-btn
+.v-btn {
+  border-radius: var(--border-radius-md) !important;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.5px;
+
+  &.v-btn--size-default {
+    min-height: 40px;
+    padding: 0 16px;
+  }
+}
+
+// Mejorar v-chip
+.v-chip {
+  border-radius: var(--border-radius-sm) !important;
+  font-weight: 500;
+}
+
+// Mejorar v-text-field
+.v-text-field {
+  .v-field {
+    border-radius: var(--border-radius-md) !important;
+  }
+}
+
+// Mejorar v-dialog
+.v-dialog {
+  .v-card {
+    border-radius: var(--border-radius-xl) !important;
+  }
+}
+
+/* ========================================
+   ANIMACIONES DE ENTRADA ESCALONADAS
+   ======================================== */
+
+.stagger-animation {
+  .stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: staggerFadeIn 0.6s ease-out forwards;
+
+    @for $i from 1 through 20 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.1}s;
+      }
+    }
+  }
+}
+
+@keyframes staggerFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   MEJORAS DE PERFORMANCE
+   ======================================== */
+
+// Optimizar re-rendering
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+// Mejorar compositing
+.gpu-accelerated {
+  transform: translateZ(0);
+}
+
+/* ========================================
+   UTILIDADES DE DEBUG (solo en desarrollo)
+   ======================================== */
+
+.debug-grid {
+  background-image: linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
 }

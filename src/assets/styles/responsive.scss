@@ -1,0 +1,507 @@
+// 📱 Sistema responsive - Directorio de Usuarios
+
+@import "./variables.scss";
+
+/* ========================================
+   GRID SYSTEM RESPONSIVE
+   ======================================== */
+
+.container-responsive {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--container-padding-mobile);
+
+  @include respond-to(sm) {
+    max-width: var(--container-max-width-sm);
+    padding: 0 var(--container-padding-tablet);
+  }
+
+  @include respond-to(md) {
+    max-width: var(--container-max-width-md);
+  }
+
+  @include respond-to(lg) {
+    max-width: var(--container-max-width-lg);
+    padding: 0 var(--container-padding-desktop);
+  }
+
+  @include respond-to(xl) {
+    max-width: var(--container-max-width-xl);
+  }
+
+  @include respond-to(xxl) {
+    max-width: var(--container-max-width-xxl);
+  }
+}
+
+/* ========================================
+   RESPONSIVE UTILITIES
+   ======================================== */
+
+// Spacing responsive
+.spacing-xs {
+  margin: var(--spacing-xs);
+}
+.spacing-sm {
+  margin: var(--spacing-sm);
+}
+.spacing-md {
+  margin: var(--spacing-md);
+}
+.spacing-lg {
+  margin: var(--spacing-lg);
+}
+.spacing-xl {
+  margin: var(--spacing-xl);
+}
+
+.spacing-y-xs {
+  margin-top: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+}
+.spacing-y-sm {
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+.spacing-y-md {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+.spacing-y-lg {
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+.spacing-y-xl {
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.spacing-x-xs {
+  margin-left: var(--spacing-xs);
+  margin-right: var(--spacing-xs);
+}
+.spacing-x-sm {
+  margin-left: var(--spacing-sm);
+  margin-right: var(--spacing-sm);
+}
+.spacing-x-md {
+  margin-left: var(--spacing-md);
+  margin-right: var(--spacing-md);
+}
+.spacing-x-lg {
+  margin-left: var(--spacing-lg);
+  margin-right: var(--spacing-lg);
+}
+.spacing-x-xl {
+  margin-left: var(--spacing-xl);
+  margin-right: var(--spacing-xl);
+}
+
+// Padding responsive
+.padding-xs {
+  padding: var(--spacing-xs);
+}
+.padding-sm {
+  padding: var(--spacing-sm);
+}
+.padding-md {
+  padding: var(--spacing-md);
+}
+.padding-lg {
+  padding: var(--spacing-lg);
+}
+.padding-xl {
+  padding: var(--spacing-xl);
+}
+
+/* ========================================
+   RESPONSIVE GRID LAYOUTS
+   ======================================== */
+
+.grid-responsive {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: 1fr;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include respond-to(xl) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @include respond-to(xxl) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.grid-auto-fit {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+  @include respond-to(sm) {
+    gap: var(--spacing-lg);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+
+/* ========================================
+   RESPONSIVE TYPOGRAPHY
+   ======================================== */
+
+.text-responsive {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+
+  @include respond-to(sm) {
+    font-size: var(--font-size-base);
+  }
+
+  @include respond-to(lg) {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+  }
+}
+
+.heading-responsive {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-bold);
+
+  @include respond-to(sm) {
+    font-size: var(--font-size-2xl);
+  }
+
+  @include respond-to(md) {
+    font-size: var(--font-size-3xl);
+  }
+
+  @include respond-to(lg) {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+/* ========================================
+   RESPONSIVE COMPONENTS
+   ======================================== */
+
+// Cards responsive
+.card-responsive {
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+
+  @include respond-to(sm) {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .card-content {
+    padding: var(--spacing-md);
+
+    @include respond-to(sm) {
+      padding: var(--spacing-lg);
+    }
+  }
+}
+
+// Buttons responsive
+.button-responsive {
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  min-height: var(--button-height-sm);
+
+  @include respond-to(sm) {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-md) var(--spacing-lg);
+    min-height: var(--button-height-md);
+  }
+
+  @include respond-to(lg) {
+    min-height: var(--button-height-lg);
+  }
+}
+
+// Avatars responsive
+.avatar-responsive {
+  width: var(--avatar-size-md);
+  height: var(--avatar-size-md);
+
+  @include respond-to(sm) {
+    width: var(--avatar-size-lg);
+    height: var(--avatar-size-lg);
+  }
+
+  @include respond-to(lg) {
+    width: var(--avatar-size-xl);
+    height: var(--avatar-size-xl);
+  }
+}
+
+/* ========================================
+   RESPONSIVE LAYOUT PATTERNS
+   ======================================== */
+
+// Sidebar layout
+.layout-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+
+  @include respond-to(lg) {
+    flex-direction: row;
+    gap: var(--spacing-xl);
+
+    .sidebar {
+      flex: 0 0 280px;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+  }
+}
+
+// Hero section
+.hero-responsive {
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+
+  @include respond-to(md) {
+    padding: var(--spacing-xxl) 0;
+  }
+
+  @include respond-to(lg) {
+    padding: var(--spacing-xxxl) 0;
+    text-align: left;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-md);
+
+    @include respond-to(sm) {
+      font-size: var(--font-size-3xl);
+    }
+
+    @include respond-to(md) {
+      font-size: var(--font-size-4xl);
+    }
+
+    @include respond-to(lg) {
+      font-size: var(--font-size-5xl);
+      margin-bottom: var(--spacing-lg);
+    }
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+
+    @include respond-to(sm) {
+      font-size: var(--font-size-lg);
+    }
+
+    @include respond-to(lg) {
+      font-size: var(--font-size-xl);
+    }
+  }
+}
+
+/* ========================================
+   RESPONSIVE NAVIGATION
+   ======================================== */
+
+.nav-responsive {
+  .nav-items {
+    display: none;
+
+    @include respond-to(md) {
+      display: flex;
+      gap: var(--spacing-lg);
+    }
+  }
+
+  .nav-mobile-toggle {
+    display: block;
+
+    @include respond-to(md) {
+      display: none;
+    }
+  }
+
+  .nav-mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-index-modal);
+
+    @include respond-to(md) {
+      display: none;
+    }
+
+    .nav-mobile-content {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 280px;
+      background: var(--surface-color);
+      padding: var(--spacing-lg);
+      transform: translateX(100%);
+      transition: transform var(--duration-normal) var(--ease-out);
+
+      &.open {
+        transform: translateX(0);
+      }
+    }
+  }
+}
+
+/* ========================================
+   RESPONSIVE IMAGES
+   ======================================== */
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.img-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ========================================
+   RESPONSIVE TABLES
+   ======================================== */
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  table {
+    min-width: 600px;
+    width: 100%;
+
+    @include respond-to(lg) {
+      min-width: 100%;
+    }
+  }
+}
+
+/* ========================================
+   RESPONSIVE FORMS
+   ======================================== */
+
+.form-responsive {
+  .form-group {
+    margin-bottom: var(--spacing-md);
+
+    @include respond-to(sm) {
+      margin-bottom: var(--spacing-lg);
+    }
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+
+    @include respond-to(sm) {
+      flex-direction: row;
+      gap: var(--spacing-lg);
+
+      .form-group {
+        flex: 1;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+
+    @include respond-to(sm) {
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: var(--spacing-md);
+    }
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid;
+  }
+
+  blockquote,
+  pre {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  @page {
+    margin: 0.5in;
+  }
+}
