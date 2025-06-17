@@ -106,7 +106,6 @@
     <!-- Footer de la aplicación -->
     <v-footer
       color="grey-lighten-4"
-      app
       class="app-footer"
     >
       <v-container class="container-responsive">

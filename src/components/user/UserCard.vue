@@ -149,7 +149,7 @@ const handleViewMore = () => {
 /* Header styles */
 .user-card-header {
   position: relative;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl) var(--spacing-lg);
   background: linear-gradient(
     135deg,
     rgba(var(--v-theme-primary), 0.05),
@@ -163,7 +163,7 @@ const handleViewMore = () => {
 
 .user-avatar-wrapper {
   position: relative;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 .user-avatar {
@@ -214,7 +214,7 @@ const handleViewMore = () => {
 
 /* Content styles */
 .user-card-content {
-  padding: var(--spacing-lg) !important;
+  padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-xl) var(--spacing-lg) !important;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -224,7 +224,7 @@ const handleViewMore = () => {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
   justify-content: center;
 }
 
@@ -271,11 +271,11 @@ const handleViewMore = () => {
 /* Responsive */
 @media (max-width: 599px) {
   .user-card-header {
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-md);
   }
   
   .user-card-content {
-    padding: var(--spacing-md) !important;
+    padding: var(--spacing-lg) var(--spacing-md) !important;
   }
   
   .user-card:hover {
@@ -284,6 +284,10 @@ const handleViewMore = () => {
   
   .user-name {
     font-size: var(--font-size-base);
+  }
+  
+  .user-avatar-wrapper {
+    margin-bottom: var(--spacing-md);
   }
 }
 

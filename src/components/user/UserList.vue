@@ -142,7 +142,7 @@
     </v-row>
 
     <!-- Grid de usuarios -->
-    <v-row v-else-if="userCount > 0">
+    <v-row v-else-if="userCount > 0" justify="center" class="user-cards-grid">
       <v-col
         v-for="user in filteredUsers"
         :key="user.id"
@@ -150,13 +150,15 @@
         sm="6"
         md="4"
         lg="3"
-        xl="2"
+        xl="3"
+        class="d-flex"
       >
         <UserCard
           :user="user"
           :loading="loading"
           @open-modal="openUserModal"
           @click="handleUserClick"
+          class="w-100"
         />
       </v-col>
     </v-row>
@@ -298,6 +300,26 @@ onMounted(async () => {
   min-height: 60vh;
 }
 
+/* Grid de tarjetas centrado y con mejor espaciado */
+.user-cards-grid {
+  margin: 0 auto;
+  max-width: 1400px;
+  gap: var(--spacing-lg);
+}
+
+.user-cards-grid .v-col {
+  padding: var(--spacing-md);
+  display: flex;
+  justify-content: center;
+}
+
+/* Asegurar que las tarjetas tengan el mismo alto */
+.user-cards-grid .user-card {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
 /* Animaciones de entrada escalonadas */
 .user-card {
   animation: fadeInUp 0.6s ease-out;
@@ -319,12 +341,35 @@ onMounted(async () => {
   .user-list-container {
     padding: 8px 16px;
   }
+  
+  .user-cards-grid {
+    gap: var(--spacing-md);
+  }
+  
+  .user-cards-grid .v-col {
+    padding: var(--spacing-sm);
+  }
+  
+  .user-cards-grid .user-card {
+    max-width: 100%;
+  }
 }
 
 @media (min-width: 1920px) {
   .user-list-container {
     max-width: 1600px;
     margin: 0 auto;
+  }
+  
+  .user-cards-grid {
+    gap: var(--spacing-xl);
+  }
+}
+
+/* Responsive del grid para centrar mejor */
+@media (min-width: 1264px) {
+  .user-cards-grid .v-col {
+    max-width: 300px;
   }
 }
 
@@ -345,5 +390,10 @@ onMounted(async () => {
 /* Loading overlay mejorado */
 .loading-overlay {
   backdrop-filter: blur(2px);
+}
+
+/* Centrar el contenido cuando hay pocas tarjetas */
+.user-cards-grid:has(.v-col:nth-child(-n+3)) {
+  justify-content: center;
 }
 </style> 
