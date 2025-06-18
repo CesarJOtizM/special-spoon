@@ -1,0 +1,74 @@
+// 🎴 Estilos del componente UserCard optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+/* Base card styles */
+.user-card {
+  @include card-base;
+  @include hover-lift;
+  cursor: pointer;
+  height: 100%;
+  min-height: 340px;
+  width: 100%;
+  @include flex-column;
+}
+
+/* Modificador para tarjetas cuadradas */
+.square-card {
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* Header styles */
+.user-card-header {
+  position: relative;
+  padding: var(--spacing-lg);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--v-theme-primary), 0.05),
+    rgba(var(--v-theme-secondary), 0.05)
+  );
+  @include flex-column;
+  align-items: center;
+  text-align: center;
+  flex: 0 0 auto;
+  min-height: 180px;
+  justify-content: center;
+}
+
+.user-avatar-wrapper {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+  @include flex-center;
+}
+
+.user-avatar {
+  @include avatar-base(medium);
+  box-shadow: var(--elevation-1);
+}
+
+.user-status-indicator {
+  @include status-indicator(success, 12px);
+}
+
+/* Content styles */
+.user-card-content {
+  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
+  @include flex-column;
+  justify-content: space-between;
+  flex: 1;
+  min-height: 120px;
+  text-align: center;
+}
+
+.user-actions {
+  @include flex-center;
+  gap: var(--spacing-sm);
+  margin-top: auto;
+  flex: 0 0 auto;
+  padding-top: var(--spacing-sm);
+}
+
+.action-button {
+  @include button-base;
+}

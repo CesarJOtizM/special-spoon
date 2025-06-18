@@ -1,0 +1,385 @@
+// 🛠️ Utilidades y mixins reutilizables
+@use "./variables.scss" as *;
+
+/* ========================================
+   MIXINS REUTILIZABLES
+   ======================================== */
+
+// Mixin para animaciones de entrada
+@mixin fadeInLeft($delay: 0s) {
+  animation: fadeInLeft 0.4s ease-out $delay both;
+}
+
+@mixin fadeInRight($delay: 0s) {
+  animation: fadeInRight 0.4s ease-out $delay both;
+}
+
+@mixin fadeInUp($delay: 0s) {
+  animation: fadeInUp 0.4s ease-out $delay both;
+}
+
+@mixin slideInRight($delay: 0s) {
+  animation: slideInRight 0.4s ease-out $delay both;
+}
+
+@mixin slideInUp($delay: 0s) {
+  animation: slideInUp 0.4s ease-out $delay both;
+}
+
+@mixin scaleIn($delay: 0s) {
+  animation: scaleIn 0.3s ease-out $delay both;
+}
+
+// Mixin para transiciones
+@mixin smooth-transition($property: all) {
+  transition: $property var(--duration-normal) var(--ease-in-out);
+}
+
+@mixin hover-lift {
+  transition: all var(--duration-normal) var(--ease-in-out);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--elevation-3);
+  }
+}
+
+// Mixin para hover effects comunes
+@mixin hover-scale($scale: 1.05) {
+  transition: transform var(--duration-normal) var(--ease-in-out);
+
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+@mixin hover-translate-y($distance: -1px) {
+  transition: transform var(--duration-normal) var(--ease-in-out);
+
+  &:hover {
+    transform: translateY($distance);
+  }
+}
+
+@mixin hover-translate-x($distance: 4px) {
+  transition: transform var(--duration-normal) var(--ease-in-out);
+
+  &:hover {
+    transform: translateX($distance);
+  }
+}
+
+// Mixin para cards
+@mixin card-base {
+  border-radius: var(--border-radius-lg);
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgba(var(--v-theme-outline), 0.1);
+  overflow: hidden;
+}
+
+// Mixin para secciones
+@mixin section-base {
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  background: rgba(var(--v-theme-surface-variant), 0.5);
+}
+
+// Mixin para títulos de sección
+@mixin section-title($color: primary) {
+  color: rgb(var(--v-theme-on-surface));
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+
+  .v-icon {
+    margin-right: var(--spacing-sm);
+    color: rgb(var(--v-theme-#{$color}));
+  }
+}
+
+// Mixin para items de lista
+@mixin list-item-base($color: primary) {
+  margin-bottom: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(var(--v-theme-#{$color}), 0.05);
+    @include hover-translate-x(4px);
+  }
+
+  .v-list-item-title {
+    font-weight: var(--font-weight-medium);
+    color: rgb(var(--v-theme-on-surface));
+    font-size: var(--font-size-sm);
+  }
+
+  .v-list-item-subtitle {
+    color: rgba(var(--v-theme-on-surface), 0.7);
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-normal);
+  }
+
+  .v-icon {
+    color: rgb(var(--v-theme-#{$color}));
+  }
+}
+
+// Mixin para enlaces
+@mixin link-base($color: primary) {
+  color: rgb(var(--v-theme-#{$color}));
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    color: rgb(var(--v-theme-#{$color}-darken-1));
+    @include hover-translate-x(4px);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: rgb(var(--v-theme-#{$color}));
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+// Mixin para avatares
+@mixin avatar-base($size: medium) {
+  @include hover-scale(1.05);
+
+  @if $size == small {
+    border: 2px solid rgba(var(--v-theme-primary), 0.1);
+  } @else if $size == medium {
+    border: 3px solid rgba(var(--v-theme-primary), 0.2);
+  } @else if $size == large {
+    border: 4px solid rgba(var(--v-theme-primary), 0.3);
+  }
+}
+
+// Mixin para indicadores de estado
+@mixin status-indicator($color: success, $size: 12px) {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  border: 2px solid rgb(var(--v-theme-surface));
+  background: rgb(var(--v-theme-#{$color}));
+}
+
+// Mixin para botones
+@mixin button-base {
+  min-height: 44px;
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--duration-normal) var(--ease-in-out);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+
+  &:hover {
+    @include hover-translate-y(-1px);
+    box-shadow: var(--elevation-2);
+  }
+}
+
+// Mixin para texto con variantes de tamaño
+@mixin text-variant($size: base, $weight: normal) {
+  font-size: var(--font-size-#{$size});
+  font-weight: var(--font-weight-#{$weight});
+  line-height: var(--line-height-normal);
+}
+
+// Mixin para contenedores centrados
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Mixin para responsive
+@mixin mobile-only {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media (min-width: 601px) and (max-width: 960px) {
+    @content;
+  }
+}
+
+@mixin desktop-only {
+  @media (min-width: 961px) {
+    @content;
+  }
+}
+
+// Mixin para variantes de tamaño
+@mixin size-variant($variant) {
+  @if $variant == compact {
+    padding: var(--spacing-sm);
+    margin: var(--spacing-sm);
+  } @else if $variant == normal {
+    padding: var(--spacing-md);
+    margin: var(--spacing-md);
+  } @else if $variant == large {
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg);
+  }
+}
+
+// Mixin para chips/tags
+@mixin chip-base($color: primary) {
+  background: rgba(var(--v-theme-#{$color}), 0.1) !important;
+  color: rgb(var(--v-theme-#{$color})) !important;
+  border: 1px solid rgba(var(--v-theme-#{$color}), 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    @include hover-translate-y(-1px);
+    box-shadow: var(--elevation-1);
+  }
+}
+
+/* ========================================
+   CLASES UTILITARIAS
+   ======================================== */
+
+// Clases de animación
+.animate-fade-in-left {
+  @include fadeInLeft;
+}
+.animate-fade-in-right {
+  @include fadeInRight;
+}
+.animate-fade-in-up {
+  @include fadeInUp;
+}
+.animate-slide-in-right {
+  @include slideInRight;
+}
+.animate-slide-in-up {
+  @include slideInUp;
+}
+.animate-scale-in {
+  @include scaleIn;
+}
+
+// Clases de transición
+.smooth-transition {
+  @include smooth-transition;
+}
+.hover-lift {
+  @include hover-lift;
+}
+.hover-scale {
+  @include hover-scale;
+}
+.hover-translate-y {
+  @include hover-translate-y;
+}
+.hover-translate-x {
+  @include hover-translate-x;
+}
+
+// Clases de layout
+.card-base {
+  @include card-base;
+}
+.section-base {
+  @include section-base;
+}
+
+// Clases de texto
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+// Clases de flexbox
+.flex-center {
+  @include flex-center;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+.flex-column {
+  @include flex-column;
+}
+
+// Clases de espaciado
+.spacing-compact {
+  @include size-variant(compact);
+}
+
+.spacing-normal {
+  @include size-variant(normal);
+}
+
+.spacing-large {
+  @include size-variant(large);
+}
+
+// Clases de estado
+.status-online {
+  @include status-indicator(success);
+}
+
+.status-offline {
+  @include status-indicator(secondary);
+}
+
+// Clases de chips
+.chip-primary {
+  @include chip-base(primary);
+}
+
+.chip-secondary {
+  @include chip-base(secondary);
+}
+
+.chip-success {
+  @include chip-base(success);
+}
+
+.chip-warning {
+  @include chip-base(warning);
+}
+
+.chip-error {
+  @include chip-base(error);
+}

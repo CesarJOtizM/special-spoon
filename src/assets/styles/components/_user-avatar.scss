@@ -1,0 +1,35 @@
+// 👤 Estilos del componente UserAvatar optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.user-avatar {
+  @include avatar-base(medium);
+}
+
+/* Estilos específicos para diferentes tamaños */
+.user-avatar--small {
+  @include avatar-base(small);
+}
+
+.user-avatar--medium {
+  @include avatar-base(medium);
+}
+
+.user-avatar--large {
+  @include avatar-base(large);
+}
+
+/* Estados especiales */
+.user-avatar--online {
+  position: relative;
+
+  &::after {
+    @include status-indicator(success, 12px);
+    content: "";
+  }
+}
+
+.user-avatar--offline {
+  opacity: 0.7;
+  filter: grayscale(0.3);
+}

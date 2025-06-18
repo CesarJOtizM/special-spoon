@@ -1,0 +1,18 @@
+// 🧩 Índice de estilos de componentes
+// Este archivo importa todos los estilos modulares de componentes
+
+// Componentes comunes
+@use "./loading-spinner";
+@use "./empty-state";
+@use "./user-avatar";
+@use "./user-info";
+@use "./user-tags";
+
+// Componentes de usuario
+@use "./user-card";
+@use "./user-modal";
+@use "./user-list";
+@use "./search-bar";
+@use "./advanced-filters";
+@use "./user-contact-info";
+@use "./user-company-info";

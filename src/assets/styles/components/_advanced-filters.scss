@@ -1,0 +1,80 @@
+// 🎛️ Estilos del componente AdvancedFilters optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.advanced-filters {
+  background: rgba(var(--v-theme-surface-variant), 0.5);
+  border-radius: var(--border-radius-md);
+  @include size-variant(normal);
+  border: 1px solid rgba(var(--v-theme-outline), 0.2);
+  animation: slideInDown 0.3s ease-out;
+  margin-top: var(--spacing-md);
+
+  /* Hover effects para campos */
+  :deep(.v-field) {
+    @include smooth-transition(all);
+
+    &:hover {
+      @include hover-translate-y(-1px);
+      box-shadow: 0 2px 8px rgba(var(--v-theme-primary), 0.1);
+    }
+  }
+
+  /* Estilos para los selectores */
+  :deep(.v-select) {
+    .v-field__input {
+      @include text-variant(sm, normal);
+    }
+  }
+
+  /* Botón de limpiar filtros */
+  .v-btn {
+    @include text-variant(sm, medium);
+    @include smooth-transition(all);
+
+    &:hover {
+      @include hover-translate-y(-1px);
+      background: rgba(var(--v-theme-primary), 0.1);
+    }
+
+    .v-icon {
+      margin-right: var(--spacing-xs);
+    }
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@include mobile-only {
+  .advanced-filters {
+    @include size-variant(compact);
+
+    :deep(.v-col) {
+      margin-bottom: var(--spacing-sm);
+    }
+  }
+}
+
+/* Variantes de tema */
+.advanced-filters--compact {
+  @include size-variant(compact);
+
+  :deep(.v-field) {
+    @include text-variant(xs, normal);
+  }
+}
+
+.advanced-filters--elevated {
+  box-shadow: var(--elevation-2);
+  border: 1px solid rgba(var(--v-theme-primary), 0.2);
+}

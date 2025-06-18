@@ -1,0 +1,158 @@
+// 📋 Estilos del componente UserList optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.user-list-container {
+  min-height: 60vh;
+}
+
+/* Grid de usuarios mejorado */
+.user-grid {
+  @include flex-center;
+  gap: var(--spacing-lg);
+
+  .v-col {
+    @include flex-center;
+    align-items: stretch;
+    max-width: 300px;
+  }
+}
+
+/* Animaciones de entrada escalonadas */
+.user-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estados vacíos más atractivos */
+.empty-state {
+  min-height: 40vh;
+  @include flex-column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Smooth transitions */
+.v-row {
+  @include smooth-transition(all);
+}
+
+/* Loading overlay mejorado */
+.loading-overlay {
+  backdrop-filter: blur(2px);
+}
+
+/* Estilos para estadísticas */
+.user-stats {
+  @include flex-between;
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-lg);
+
+  .stats-left {
+    @include flex-center;
+
+    h2 {
+      margin-right: var(--spacing-md);
+      color: rgb(var(--v-theme-on-surface));
+      @include text-variant(lg, semibold);
+    }
+  }
+
+  .stats-right {
+    @include flex-center;
+    gap: var(--spacing-sm);
+  }
+}
+
+/* Estilos para el indicador de búsqueda activa */
+.search-indicator {
+  @include flex-center;
+  gap: var(--spacing-xs);
+  @include text-variant(sm, normal);
+
+  .v-icon {
+    font-size: 16px;
+  }
+}
+
+/* Responsive */
+@include mobile-only {
+  .user-list-container {
+    padding: 8px 16px;
+  }
+
+  .user-grid {
+    gap: var(--spacing-md);
+
+    .v-col {
+      max-width: 100%;
+    }
+  }
+
+  .user-stats {
+    @include flex-column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+
+    .stats-left {
+      @include flex-column;
+      align-items: flex-start;
+
+      h2 {
+        margin-right: 0;
+        margin-bottom: var(--spacing-xs);
+      }
+    }
+  }
+}
+
+@media (min-width: 1920px) {
+  .user-list-container {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .user-grid .v-col {
+    max-width: 280px;
+  }
+}
+
+/* Mejor centrado para pantallas grandes */
+@media (min-width: 1400px) {
+  .user-grid {
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* Variantes de layout */
+.user-list--compact {
+  .user-grid {
+    gap: var(--spacing-md);
+
+    .v-col {
+      max-width: 250px;
+    }
+  }
+}
+
+.user-list--spacious {
+  .user-grid {
+    gap: var(--spacing-xl);
+
+    .v-col {
+      max-width: 320px;
+    }
+  }
+}

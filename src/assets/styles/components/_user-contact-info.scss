@@ -1,0 +1,38 @@
+// 📞 Estilos del componente UserContactInfo optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.contact-section {
+  @include fadeInLeft(0.5s);
+}
+
+.section-title {
+  @include section-title(primary);
+  @include fadeInLeft(0.2s);
+}
+
+.contact-item {
+  @include list-item-base(primary);
+  @include slideInRight;
+  opacity: 0;
+}
+
+.contact-link {
+  @include link-base(primary);
+
+  .v-icon {
+    margin-left: var(--spacing-xs);
+    font-size: 14px;
+  }
+}
+
+/* Responsive */
+@include mobile-only {
+  .contact-section {
+    @include size-variant(compact);
+  }
+
+  .contact-item {
+    margin-bottom: var(--spacing-xs);
+  }
+}
