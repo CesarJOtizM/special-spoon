@@ -11,13 +11,11 @@
       <!-- Header del modal con animación -->
       <v-card-title class="modal-header d-flex justify-space-between align-center pa-4 bg-primary">
         <div class="d-flex align-center">
-          <v-avatar
-            :image="avatarUrl"
+          <UserAvatar
+            :user="user"
             size="48"
             class="mr-3 modal-avatar-header"
-          >
-            <v-icon v-if="!avatarUrl" icon="mdi-account" />
-          </v-avatar>
+          />
           <div class="header-text">
             <h2 class="text-h6 text-white">{{ user.name }}</h2>
             <p class="text-body-2 text-white opacity-80">
@@ -41,13 +39,11 @@
           <!-- Avatar principal centrado -->
           <v-row class="mb-4">
             <v-col cols="12" class="text-center">
-              <v-avatar
-                :image="avatarUrl"
+              <UserAvatar
+                :user="user"
                 size="120"
                 class="mb-3 user-modal-avatar main-avatar"
-              >
-                <v-icon v-if="!avatarUrl" icon="mdi-account" size="60" />
-              </v-avatar>
+              />
               <h2 class="text-h5 mb-1 user-name">{{ user.name }}</h2>
               <p class="text-body-1 text-medium-emphasis user-email">{{ user.email }}</p>
             </v-col>
@@ -57,94 +53,12 @@
           <v-row>
             <!-- Columna izquierda: Contacto -->
             <v-col cols="12" md="6">
-              <h3 class="text-h6 mb-3 d-flex align-center section-title contact-section">
-                <v-icon icon="mdi-account-details" class="mr-2" />
-                Información de Contacto
-              </h3>
-              
-              <v-list density="compact" class="pa-0">
-                <v-list-item class="contact-item" :style="{ animationDelay: '0.1s' }">
-                  <template #prepend>
-                    <v-icon icon="mdi-phone" color="primary" />
-                  </template>
-                  <v-list-item-title>Teléfono</v-list-item-title>
-                  <v-list-item-subtitle>
-                    <a :href="`tel:${user.phone}`" class="contact-link">
-                      {{ user.phone }}
-                    </a>
-                  </v-list-item-subtitle>
-                </v-list-item>
-
-                <v-list-item class="contact-item" :style="{ animationDelay: '0.2s' }">
-                  <template #prepend>
-                    <v-icon icon="mdi-web" color="primary" />
-                  </template>
-                  <v-list-item-title>Sitio Web</v-list-item-title>
-                  <v-list-item-subtitle>
-                    <a 
-                      :href="`https://${user.website}`" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      class="contact-link"
-                    >
-                      {{ user.website }}
-                      <v-icon icon="mdi-open-in-new" size="small" class="ml-1" />
-                    </a>
-                  </v-list-item-subtitle>
-                </v-list-item>
-
-                <v-list-item class="contact-item" :style="{ animationDelay: '0.3s' }">
-                  <template #prepend>
-                    <v-icon icon="mdi-email" color="primary" />
-                  </template>
-                  <v-list-item-title>Email</v-list-item-title>
-                  <v-list-item-subtitle>
-                    <a :href="`mailto:${user.email}`" class="contact-link">
-                      {{ user.email }}
-                    </a>
-                  </v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
+              <UserContactInfo :user="user" />
             </v-col>
 
             <!-- Columna derecha: Empresa y Dirección -->
             <v-col cols="12" md="6">
-              <h3 class="text-h6 mb-3 d-flex align-center section-title company-section">
-                <v-icon icon="mdi-office-building" class="mr-2" />
-                Empresa y Ubicación
-              </h3>
-              
-              <v-list density="compact" class="pa-0">
-                <v-list-item v-if="user.company?.name" class="company-item" :style="{ animationDelay: '0.4s' }">
-                  <template #prepend>
-                    <v-icon icon="mdi-domain" color="secondary" />
-                  </template>
-                  <v-list-item-title>Compañía</v-list-item-title>
-                  <v-list-item-subtitle>
-                    {{ user.company.name }}
-                  </v-list-item-subtitle>
-                </v-list-item>
-
-                <v-list-item v-if="user.company?.catchPhrase" class="company-item" :style="{ animationDelay: '0.5s' }">
-                  <template #prepend>
-                    <v-icon icon="mdi-lightbulb" color="secondary" />
-                  </template>
-                  <v-list-item-title>Eslogan</v-list-item-title>
-                  <v-list-item-subtitle>
-                    "{{ user.company.catchPhrase }}"
-                  </v-list-item-subtitle>
-                </v-list-item>
-
-                <v-list-item v-if="formattedAddress" class="company-item" :style="{ animationDelay: '0.6s' }">
-                  <template #prepend>
-                    <v-icon icon="mdi-map-marker" color="secondary" />
-                  </template>
-                  <v-list-item-title>Dirección</v-list-item-title>
-                  <v-list-item-subtitle>
-                    {{ formattedAddress }}
-                  </v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
+              <UserCompanyInfo :user="user" />
             </v-col>
           </v-row>
 
@@ -183,7 +97,9 @@
 
 <script setup lang="ts">
 import { computed, watch } from 'vue'
-import { userService } from '@/services'
+import UserAvatar from '@/components/common/UserAvatar.vue'
+import UserContactInfo from './UserContactInfo.vue'
+import UserCompanyInfo from './UserCompanyInfo.vue'
 import type { User } from '@/types/user'
 
 interface Props {
@@ -202,16 +118,6 @@ const emit = defineEmits<Emits>()
 const dialogVisible = computed({
   get: () => props.modelValue,
   set: (value: boolean) => emit('update:modelValue', value)
-})
-
-// 🖼️ Avatar URL generada
-const avatarUrl = computed(() => {
-  return props.user ? userService.generateAvatarUrl(props.user) : ''
-})
-
-// 📍 Dirección formateada
-const formattedAddress = computed(() => {
-  return props.user ? userService.formatAddress(props.user) : ''
 })
 
 // 🚪 Cerrar modal
@@ -278,25 +184,6 @@ watch(dialogVisible, (isOpen) => {
 }
 
 /* 🏷️ Animaciones de secciones */
-.section-title {
-  animation: fadeInLeft 0.4s ease-out 0.2s both;
-}
-
-.contact-section {
-  animation-delay: 0.5s;
-}
-
-.company-section {
-  animation-delay: 0.6s;
-}
-
-/* 📋 Animaciones de elementos de lista */
-.contact-item,
-.company-item {
-  animation: slideInRight 0.4s ease-out both;
-  opacity: 0;
-}
-
 .business-card {
   animation: slideInUp 0.4s ease-out 0.7s both;
 }
@@ -318,34 +205,6 @@ watch(dialogVisible, (isOpen) => {
 
 .close-footer-btn:hover {
   transform: translateY(-2px);
-}
-
-/* 🔗 Estilos de enlaces mejorados */
-.contact-link {
-  color: rgb(var(--v-theme-primary));
-  text-decoration: none;
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-.contact-link:hover {
-  color: rgb(var(--v-theme-primary-darken-1));
-  transform: translateX(4px);
-}
-
-.contact-link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: rgb(var(--v-theme-primary));
-  transition: width 0.3s ease;
-}
-
-.contact-link:hover::after {
-  width: 100%;
 }
 
 /* 🎯 Keyframes para animaciones */
@@ -419,32 +278,10 @@ watch(dialogVisible, (isOpen) => {
   }
 }
 
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
 @keyframes slideInLeft {
   from {
     opacity: 0;
     transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
   }
   to {
     opacity: 1;
@@ -514,12 +351,6 @@ watch(dialogVisible, (isOpen) => {
     width: 100px !important;
     height: 100px !important;
   }
-  
-  /* Reducir duración de animaciones en móvil */
-  .contact-item,
-  .company-item {
-    animation-duration: 0.3s;
-  }
 }
 
 /* ♿ Respeto por preferencias de movimiento */
@@ -533,9 +364,6 @@ watch(dialogVisible, (isOpen) => {
   .user-email,
   .header-text h2,
   .header-text p,
-  .section-title,
-  .contact-item,
-  .company-item,
   .business-card,
   .close-btn,
   .close-footer-btn {
@@ -578,7 +406,6 @@ watch(dialogVisible, (isOpen) => {
 /* 🚀 Performance optimizations */
 .user-modal,
 .main-avatar,
-.contact-link,
 .close-btn,
 .close-footer-btn {
   will-change: transform, opacity;

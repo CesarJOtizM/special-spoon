@@ -117,27 +117,15 @@
 
     <!-- Mensaje cuando no hay resultados de búsqueda -->
     <v-row v-else-if="isSearchActive && userCount === 0" class="justify-center">
-      <v-col cols="12" md="8" lg="6" class="text-center">
-        <v-icon
+      <v-col cols="12" md="8" lg="6">
+        <EmptyState
           icon="mdi-account-search"
-          size="80"
-          color="medium-emphasis"
-          class="mb-4"
+          title="No se encontraron usuarios"
+          :description="`No hay usuarios que coincidan con '${searchQuery}'`"
+          action-text="Limpiar búsqueda"
+          action-icon="mdi-close"
+          @action="clearSearch"
         />
-        <h3 class="text-h6 mb-2">
-          No se encontraron usuarios
-        </h3>
-        <p class="text-body-1 text-medium-emphasis mb-4">
-          No hay usuarios que coincidan con "<strong>{{ searchQuery }}</strong>"
-        </p>
-        <v-btn
-          variant="outlined"
-          color="primary"
-          @click="clearSearch"
-        >
-          <v-icon start icon="mdi-close" />
-          Limpiar búsqueda
-        </v-btn>
       </v-col>
     </v-row>
 
@@ -146,12 +134,7 @@
       <v-col
         v-for="user in filteredUsers"
         :key="user.id"
-        cols="12"
-        sm="6"
-        md="4"
-        lg="3"
-        xl="3"
-        class="d-flex"
+   
       >
         <UserCard
           :user="user"
@@ -164,27 +147,15 @@
 
     <!-- Mensaje cuando no hay usuarios (estado inicial) -->
     <v-row v-else-if="!hasUsers && !loading && !hasError" class="justify-center">
-      <v-col cols="12" md="8" lg="6" class="text-center">
-        <v-icon
+      <v-col cols="12" md="8" lg="6">
+        <EmptyState
           icon="mdi-account-group"
-          size="80"
-          color="medium-emphasis"
-          class="mb-4"
+          title="No hay usuarios disponibles"
+          description="No se pudieron cargar los usuarios del servidor"
+          action-text="Cargar usuarios"
+          action-icon="mdi-refresh"
+          @action="loadUsers"
         />
-        <h3 class="text-h6 mb-2">
-          No hay usuarios disponibles
-        </h3>
-        <p class="text-body-1 text-medium-emphasis mb-4">
-          No se pudieron cargar los usuarios del servidor
-        </p>
-        <v-btn
-          variant="outlined"
-          color="primary"
-          @click="loadUsers"
-        >
-          <v-icon start icon="mdi-refresh" />
-          Cargar usuarios
-        </v-btn>
       </v-col>
     </v-row>
 
@@ -208,8 +179,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, nextTick } from 'vue'
-import { useUsers } from '@/composables'
+import { ref, computed, onMounted } from 'vue'
+import { useUsers, useUIState } from '@/composables'
+import { EmptyState } from '@/components/common'
 import SearchBar from './SearchBar.vue'
 import UserCard from './UserCard.vue'
 import UserModal from './UserModal.vue'
@@ -232,9 +204,15 @@ const {
   clearError,
 } = useUsers()
 
+// 🎨 Estado de UI usando el nuevo composable
+const {
+  showModal,
+  selectedItem: selectedUser,
+  openModal,
+  closeModal,
+} = useUIState<User>()
+
 // 🔄 Estado local del componente
-const showModal = ref(false)
-const selectedUser = ref<User | null>(null)
 const showRefreshMessage = ref(false)
 
 // 📊 Estados computados
@@ -273,19 +251,8 @@ const handleUserClick = (user: User) => {
 // 📖 Abrir modal de usuario
 const openUserModal = (user: User) => {
   console.log(`📖 Abriendo modal para: ${user.name}`)
-  selectedUser.value = user
-  showModal.value = true
+  openModal(user)
 }
-
-// 🔄 Watcher para cerrar modal cuando se cierre
-watch(showModal, (isOpen) => {
-  if (!isOpen) {
-    // Pequeño delay para permitir que la animación termine
-    setTimeout(() => {
-      selectedUser.value = null
-    }, 300)
-  }
-})
 
 // 🚀 Cargar usuarios al montar el componente
 onMounted(async () => {
@@ -310,7 +277,7 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: stretch;
-  max-width: 300px; /* Limitar ancho máximo de columnas */
+  max-width: 300px;
 }
 
 /* Animaciones de entrada escalonadas */

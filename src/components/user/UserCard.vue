@@ -8,45 +8,27 @@
     <!-- Header de la card -->
     <div class="user-card-header">
       <div class="user-avatar-wrapper">
-        <v-avatar
-          :image="avatarUrl"
+        <UserAvatar
+          :user="user"
           :size="avatarSize"
           class="user-avatar"
         />
         <div class="user-status-indicator" />
       </div>
       
-      <div class="user-info">
-        <h3 class="user-name text-ellipsis">{{ user.name }}</h3>
-        <p class="user-email text-ellipsis">{{ user.email }}</p>
-        <p class="user-username text-ellipsis">@{{ user.username }}</p>
-      </div>
+      <UserInfo
+        :user="user"
+        class="user-info"
+      />
     </div>
 
     <!-- Contenido de la card -->
     <v-card-text class="user-card-content">
       <!-- Tags de información -->
-      <div class="user-tags">
-        <v-chip
-          size="small"
-          color="primary"
-          variant="tonal"
-          class="company-tag"
-        >
-          <v-icon start size="16">mdi-office-building</v-icon>
-          {{ user.company?.name }}
-        </v-chip>
-        
-        <v-chip
-          size="small"
-          color="secondary"
-          variant="tonal"
-          class="location-tag"
-        >
-          <v-icon start size="16">mdi-map-marker</v-icon>
-          {{ user.address?.city }}
-        </v-chip>
-      </div>
+      <UserTags
+        :user="user"
+        class="user-tags"
+      />
 
       <!-- Acciones -->
       <div class="user-actions">
@@ -79,9 +61,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
-import { userService } from '@/services'
+import UserAvatar from '@/components/common/UserAvatar.vue'
+import UserInfo from '@/components/common/UserInfo.vue'
+import UserTags from '@/components/common/UserTags.vue'
 import type { User } from '@/types/user'
 
 interface Props {
@@ -103,27 +87,10 @@ const emit = defineEmits<Emits>()
 // 📱 Responsive
 const { mobile } = useDisplay()
 
-// 🖼️ Avatar URL generada
-const avatarUrl = computed(() => {
-  return userService.generateAvatarUrl(props.user)
-})
-
 // 📏 Tamaño responsive del avatar
 const avatarSize = computed(() => {
   return mobile.value ? 60 : 72
 })
-
-// 🎯 Manejar click en la tarjeta
-const handleCardClick = () => {
-  emit('click', props.user)
-  handleViewMore()
-}
-
-// 👁️ Manejar ver más detalles
-const handleViewMore = () => {
-  console.log(`🔍 Abriendo modal para usuario: ${props.user.name}`)
-  emit('openModal', props.user)
-}
 </script>
 
 <style scoped>
@@ -131,7 +98,7 @@ const handleViewMore = () => {
 .user-card {
   cursor: pointer;
   height: 100%;
-  min-height: 340px; /* Aumentar altura mínima para dar más espacio */
+  min-height: 340px;
   display: flex;
   flex-direction: column;
   border-radius: var(--border-radius-lg) !important;
@@ -139,13 +106,12 @@ const handleViewMore = () => {
   background: rgb(var(--v-theme-surface));
   border: 1px solid rgba(var(--v-theme-outline), 0.1);
   transition: all var(--duration-normal) var(--ease-in-out);
-  /* Removemos aspect-ratio para permitir que el contenido determine la altura */
 }
 
 /* Modificador para tarjetas cuadradas */
 .square-card {
-  max-width: 280px; /* Ancho máximo para mantener proporción cuadrada */
-  margin: 0 auto; /* Centrar la tarjeta */
+  max-width: 280px;
+  margin: 0 auto;
 }
 
 .user-card:hover {
@@ -167,16 +133,16 @@ const handleViewMore = () => {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  flex: 0 0 auto; /* No crecer ni encogerse, tamaño automático */
-  min-height: 180px; /* Altura mínima fija para el header */
-  justify-content: center; /* Centrar verticalmente */
+  flex: 0 0 auto;
+  min-height: 180px;
+  justify-content: center;
 }
 
 .user-avatar-wrapper {
   position: relative;
   margin-bottom: var(--spacing-md);
   display: flex;
-  justify-content: center; /* Centrar horizontalmente */
+  justify-content: center;
 }
 
 .user-avatar {
@@ -200,73 +166,32 @@ const handleViewMore = () => {
   background: rgb(var(--v-theme-success));
 }
 
-.user-info {
-  width: 100%;
-  text-align: center; /* Centrar todo el texto */
-}
-
-.user-name {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: rgb(var(--v-theme-on-surface));
-  margin-bottom: var(--spacing-xs);
-  line-height: var(--line-height-tight);
-}
-
-.user-email {
-  color: rgba(var(--v-theme-on-surface), 0.7);
-  font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-xs);
-  line-height: var(--line-height-normal);
-}
-
-.user-username {
-  color: rgba(var(--v-theme-on-surface), 0.6);
-  font-size: var(--font-size-xs);
-  font-family: var(--font-family-mono);
-  line-height: var(--line-height-normal);
-}
-
 /* Content styles */
 .user-card-content {
   padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex: 1; /* Tomar el espacio restante */
-  min-height: 120px; /* Altura mínima para asegurar espacio para el botón */
-  text-align: center; /* Centrar contenido */
-}
-
-.user-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xs);
-  margin-bottom: var(--spacing-md);
-  justify-content: center; /* Centrar los chips */
-  flex: 0 0 auto; /* No crecer ni encogerse */
-}
-
-.user-tags .v-chip {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+  flex: 1;
+  min-height: 120px;
+  text-align: center;
 }
 
 .user-actions {
   display: flex;
   gap: var(--spacing-sm);
-  margin-top: auto; /* Empujar al final */
-  flex: 0 0 auto; /* No crecer ni encogerse */
-  padding-top: var(--spacing-sm); /* Espacio adicional arriba del botón */
+  margin-top: auto;
+  flex: 0 0 auto;
+  padding-top: var(--spacing-sm);
 }
 
 .action-button {
-  min-height: 44px; /* Aumentar altura mínima del botón */
+  min-height: 44px;
   border-radius: var(--border-radius-md);
   font-weight: var(--font-weight-medium);
   transition: all var(--duration-normal) var(--ease-in-out);
   font-size: var(--font-size-sm);
-  white-space: nowrap; /* Evitar que el texto se corte */
+  white-space: nowrap;
 }
 
 .action-button:hover {
@@ -274,33 +199,25 @@ const handleViewMore = () => {
   box-shadow: var(--elevation-2);
 }
 
-/* Texto ellipsis */
-.text-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
-}
-
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .square-card {
     max-width: 100%;
-    min-height: 300px; /* Altura mínima en móviles */
+    min-height: 300px;
   }
   
   .user-card-header {
     padding: var(--spacing-md);
-    min-height: 160px; /* Altura mínima del header en móviles */
+    min-height: 160px;
   }
   
   .user-card-content {
     padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
-    min-height: 100px; /* Altura mínima del contenido en móviles */
+    min-height: 100px;
   }
   
   .action-button {
-    min-height: 40px; /* Altura del botón en móviles */
+    min-height: 40px;
     font-size: var(--font-size-xs);
   }
 }

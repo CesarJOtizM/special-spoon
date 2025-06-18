@@ -8,11 +8,17 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    AdvancedFilters: typeof import('./src/components/user/AdvancedFilters.vue')['default']
+    EmptyState: typeof import('./src/components/common/EmptyState.vue')['default']
     LoadingSpinner: typeof import('./src/components/common/LoadingSpinner.vue')['default']
     SearchBar: typeof import('./src/components/user/SearchBar.vue')['default']
+    UserAvatar: typeof import('./src/components/common/UserAvatar.vue')['default']
     UserCard: typeof import('./src/components/user/UserCard.vue')['default']
+    UserCompanyInfo: typeof import('./src/components/user/UserCompanyInfo.vue')['default']
+    UserContactInfo: typeof import('./src/components/user/UserContactInfo.vue')['default']
+    UserInfo: typeof import('./src/components/common/UserInfo.vue')['default']
     UserList: typeof import('./src/components/user/UserList.vue')['default']
     UserModal: typeof import('./src/components/user/UserModal.vue')['default']
+    UserTags: typeof import('./src/components/common/UserTags.vue')['default']
   }
 }

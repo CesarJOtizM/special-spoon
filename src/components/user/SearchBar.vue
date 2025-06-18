@@ -26,63 +26,13 @@
       </template>
     </v-text-field>
 
-    <!-- 🎛️ Filtros avanzados (colapsables) -->
-    <v-expand-transition>
-      <div v-if="showAdvancedFilters" class="advanced-filters mt-3">
-        <v-row>
-          <!-- Tipo de búsqueda -->
-          <v-col cols="12" sm="4">
-            <v-select
-              v-model="filters.searchType"
-              :items="searchTypeOptions"
-              label="Buscar en"
-              variant="outlined"
-              density="compact"
-              hide-details
-              @update:model-value="handleFilterChange"
-            />
-          </v-col>
-
-          <!-- Ordenar por -->
-          <v-col cols="12" sm="4">
-            <v-select
-              v-model="filters.sortBy"
-              :items="sortByOptions"
-              label="Ordenar por"
-              variant="outlined"
-              density="compact"
-              hide-details
-              @update:model-value="handleFilterChange"
-            />
-          </v-col>
-
-          <!-- Orden -->
-          <v-col cols="12" sm="4">
-            <v-select
-              v-model="filters.sortOrder"
-              :items="sortOrderOptions"
-              label="Orden"
-              variant="outlined"
-              density="compact"
-              hide-details
-              @update:model-value="handleFilterChange"
-            />
-          </v-col>
-        </v-row>
-
-        <!-- Botón para limpiar filtros -->
-        <div class="d-flex justify-end mt-2">
-          <v-btn
-            variant="text"
-            size="small"
-            @click="resetFilters"
-          >
-            <v-icon start>mdi-filter-off</v-icon>
-            Limpiar filtros
-          </v-btn>
-        </div>
-      </div>
-    </v-expand-transition>
+    <!-- ��️ Filtros avanzados -->
+    <AdvancedFilters
+      :show="showAdvancedFilters"
+      :model-value="filters"
+      @update:model-value="handleFiltersUpdate"
+      @filter-change="handleFilterChange"
+    />
 
     <!-- 🔧 Toggle para filtros avanzados -->
     <div class="d-flex justify-space-between align-center mt-2">
@@ -113,6 +63,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useSearch, type SearchFilters } from '@/composables'
+import AdvancedFilters from './AdvancedFilters.vue'
 
 interface Props {
   placeholder?: string
@@ -141,25 +92,6 @@ const { searchQuery, debouncedQuery, isSearching, filters, setSearchQuery, clear
 const localSearchQuery = ref(props.modelValue)
 const showAdvancedFilters = ref(false)
 
-// 🎛️ Opciones para los selectores
-const searchTypeOptions = [
-  { title: 'Todo', value: 'all' },
-  { title: 'Nombre', value: 'name' },
-  { title: 'Email', value: 'email' },
-  { title: 'Compañía', value: 'company' }
-]
-
-const sortByOptions = [
-  { title: 'Nombre', value: 'name' },
-  { title: 'Email', value: 'email' },
-  { title: 'Compañía', value: 'company' }
-]
-
-const sortOrderOptions = [
-  { title: 'A-Z', value: 'asc' },
-  { title: 'Z-A', value: 'desc' }
-]
-
 // 🔄 Sincronizar con prop modelValue
 watch(() => props.modelValue, (newValue) => {
   localSearchQuery.value = newValue
@@ -171,11 +103,6 @@ watch(debouncedQuery, (newQuery) => {
   emit('search', newQuery)
   emit('update:modelValue', newQuery)
 })
-
-// 🔄 Emitir cuando cambien los filtros
-watch(filters, (newFilters) => {
-  emit('filter-change', newFilters)
-}, { deep: true })
 
 // 📝 Manejar cambios en el input
 const handleSearch = () => {
@@ -190,24 +117,19 @@ const handleClear = () => {
   emit('update:modelValue', '')
 }
 
+// 🎛️ Manejar actualización de filtros
+const handleFiltersUpdate = (newFilters: SearchFilters) => {
+  filters.value = newFilters
+}
+
 // 🎛️ Manejar cambios en filtros
-const handleFilterChange = () => {
-  emit('filter-change', filters.value)
+const handleFilterChange = (newFilters: SearchFilters) => {
+  emit('filter-change', newFilters)
 }
 
 // 🔧 Toggle filtros avanzados
 const toggleAdvancedFilters = () => {
   showAdvancedFilters.value = !showAdvancedFilters.value
-}
-
-// 🧹 Resetear filtros
-const resetFilters = () => {
-  filters.value = {
-    searchType: 'all',
-    sortBy: 'name',
-    sortOrder: 'asc'
-  }
-  emit('filter-change', filters.value)
 }
 </script>
 
@@ -224,47 +146,10 @@ const resetFilters = () => {
   transform: scale(1.02);
 }
 
-.advanced-filters {
-  background: rgba(var(--v-theme-surface-variant), 0.5);
-  border-radius: 8px;
-  padding: 16px;
-  border: 1px solid rgba(var(--v-theme-outline), 0.2);
-}
-
-/* Animaciones para los filtros */
-.advanced-filters {
-  animation: slideInDown 0.3s ease-out;
-}
-
-@keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Mejoras responsive */
 @media (max-width: 600px) {
   .search-bar :deep(.v-field__input) {
     font-size: 16px; /* Evita zoom en iOS */
   }
-  
-  .advanced-filters {
-    padding: 12px;
-  }
-}
-
-/* Hover effects */
-.advanced-filters :deep(.v-field) {
-  transition: all 0.2s ease;
-}
-
-.advanced-filters :deep(.v-field:hover) {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(var(--v-theme-primary), 0.1);
 }
 </style> 
