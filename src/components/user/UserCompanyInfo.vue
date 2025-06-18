@@ -54,41 +54,4 @@ const props = defineProps<Props>()
 const formattedAddress = computed(() => {
   return userService.formatAddress(props.user)
 })
-</script>
-
-<style scoped>
-.company-section {
-  animation: fadeInLeft 0.4s ease-out 0.6s both;
-}
-
-.section-title {
-  animation: fadeInLeft 0.4s ease-out 0.2s both;
-}
-
-.company-item {
-  animation: slideInRight 0.4s ease-out both;
-  opacity: 0;
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-</style> 
+</script> 

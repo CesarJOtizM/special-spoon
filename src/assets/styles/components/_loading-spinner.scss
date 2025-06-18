@@ -1,0 +1,127 @@
+// ⏳ Estilos del componente LoadingSpinner optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.loading-spinner-container {
+  @include flex-column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  @include size-variant(large);
+  text-align: center;
+}
+
+.spinner-content {
+  @include flex-column;
+  align-items: center;
+}
+
+.skeleton-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.skeleton-item {
+  margin-bottom: 16px;
+}
+
+.loading-spinner {
+  margin-bottom: var(--spacing-md);
+}
+
+.loading-text {
+  color: rgb(var(--v-theme-on-surface));
+  @include text-variant(base, medium);
+  margin-bottom: var(--spacing-sm);
+}
+
+.loading-subtitle {
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  @include text-variant(sm, normal);
+  max-width: 300px;
+  line-height: var(--line-height-relaxed);
+}
+
+.loading-dots {
+  @include flex-center;
+  gap: 4px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(var(--v-theme-primary));
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Responsive */
+@include mobile-only {
+  .loading-spinner-container {
+    min-height: 150px;
+    @include size-variant(normal);
+  }
+
+  .loading-text {
+    @include text-variant(sm, medium);
+  }
+
+  .loading-subtitle {
+    @include text-variant(xs, normal);
+  }
+}
+
+/* Performance */
+.loading-spinner,
+.dot {
+  will-change: transform, opacity;
+}
+
+/* Variantes de tamaño */
+.loading-spinner--small {
+  min-height: 100px;
+  @include size-variant(compact);
+
+  .loading-spinner {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .loading-text {
+    @include text-variant(sm, medium);
+  }
+}
+
+.loading-spinner--large {
+  min-height: 300px;
+  @include size-variant(large);
+
+  .loading-spinner {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .loading-text {
+    @include text-variant(lg, medium);
+  }
+}

@@ -1,9 +1,11 @@
 // 🎨 Estilos globales para la aplicación - Directorio de Usuarios
 @use "vuetify/styles";
 @use "./variables.scss" as *;
+@use "./utilities.scss" as *;
 @use "./responsive.scss";
 @use "./animations.scss";
-@use "./components.scss";
+@use "./components/index.scss";
+@use "./app.scss";
 
 /* ========================================
    CONFIGURACIÓN BASE

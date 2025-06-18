@@ -35,18 +35,4 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   containerClass: ''
 })
-</script>
-
-<style scoped>
-.user-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xs);
-  justify-content: center;
-}
-
-.user-tags .v-chip {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-}
-</style> 
+</script> 

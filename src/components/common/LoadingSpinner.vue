@@ -65,7 +65,7 @@ withDefaults(defineProps<Props>(), {
 })
 </script>
 
-<style scoped>
+<style>
 .loading-spinner-container {
   display: flex;
   flex-direction: column;

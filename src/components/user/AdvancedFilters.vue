@@ -119,40 +119,4 @@ const resetFilters = () => {
 }
 </script>
 
-<style scoped>
-.advanced-filters {
-  background: rgba(var(--v-theme-surface-variant), 0.5);
-  border-radius: 8px;
-  padding: 16px;
-  border: 1px solid rgba(var(--v-theme-outline), 0.2);
-  animation: slideInDown 0.3s ease-out;
-}
-
-@keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Mejoras responsive */
-@media (max-width: 600px) {
-  .advanced-filters {
-    padding: 12px;
-  }
-}
-
-/* Hover effects */
-.advanced-filters :deep(.v-field) {
-  transition: all 0.2s ease;
-}
-
-.advanced-filters :deep(.v-field:hover) {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(var(--v-theme-primary), 0.1);
-}
-</style> 
+<!-- Los estilos están en src/assets/styles/components/_advanced-filters.scss --> 

@@ -1,0 +1,29 @@
+// 🏢 Estilos del componente UserCompanyInfo optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.company-section {
+  @include fadeInLeft(0.6s);
+}
+
+.section-title {
+  @include section-title(secondary);
+  @include fadeInLeft(0.2s);
+}
+
+.company-item {
+  @include list-item-base(secondary);
+  @include slideInRight;
+  opacity: 0;
+}
+
+/* Responsive */
+@include mobile-only {
+  .company-section {
+    @include size-variant(compact);
+  }
+
+  .company-item {
+    margin-bottom: var(--spacing-xs);
+  }
+}

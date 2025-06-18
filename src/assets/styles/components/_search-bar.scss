@@ -1,0 +1,54 @@
+// 🔍 Estilos del componente SearchBar optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.search-container {
+  width: 100%;
+}
+
+.search-bar {
+  @include smooth-transition(all);
+
+  &:focus-within {
+    @include hover-scale(1.02);
+  }
+}
+
+/* Mejoras responsive */
+@media (max-width: 600px) {
+  .search-bar :deep(.v-field__input) {
+    font-size: 16px; /* Evita zoom en iOS */
+  }
+}
+
+/* Estilos para el contenedor de filtros */
+.search-filters-container {
+  margin-top: var(--spacing-md);
+  @include size-variant(normal);
+  background: rgba(var(--v-theme-surface-variant), 0.5);
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(var(--v-theme-outline), 0.1);
+}
+
+/* Estilos para el contador de resultados */
+.results-counter {
+  @include text-variant(sm, medium);
+  color: rgba(var(--v-theme-on-surface), 0.7);
+}
+
+/* Animaciones para el toggle de filtros */
+.filters-toggle {
+  @include smooth-transition(all);
+
+  &:hover {
+    @include hover-translate-y(-1px);
+  }
+
+  .v-icon {
+    @include smooth-transition(transform);
+  }
+
+  &.expanded .v-icon {
+    transform: rotate(180deg);
+  }
+}

@@ -34,14 +34,4 @@ const iconSize = computed(() => {
   const size = typeof props.size === 'number' ? props.size : parseInt(props.size as string)
   return Math.floor(size * 0.6)
 })
-</script>
-
-<style scoped>
-.v-avatar {
-  transition: all 0.3s ease;
-}
-
-.v-avatar:hover {
-  transform: scale(1.05);
-}
-</style> 
+</script> 

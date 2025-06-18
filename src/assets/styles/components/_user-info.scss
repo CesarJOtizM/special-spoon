@@ -1,0 +1,69 @@
+// ℹ️ Estilos del componente UserInfo optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.user-info {
+  width: 100%;
+  text-align: center;
+}
+
+.user-name {
+  @include text-variant(lg, semibold);
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: var(--spacing-xs);
+  line-height: var(--line-height-tight);
+}
+
+.user-email {
+  @include text-variant(sm, normal);
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  margin-bottom: var(--spacing-xs);
+  line-height: var(--line-height-normal);
+}
+
+.user-username {
+  @include text-variant(xs, normal);
+  color: rgba(var(--v-theme-on-surface), 0.6);
+  font-family: var(--font-family-mono);
+  line-height: var(--line-height-normal);
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Variantes de tamaño */
+.user-info--compact {
+  .user-name {
+    @include text-variant(base, semibold);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .user-email {
+    @include text-variant(xs, normal);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .user-username {
+    @include text-variant(xs, normal);
+  }
+}
+
+.user-info--large {
+  .user-name {
+    @include text-variant(xl, semibold);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .user-email {
+    @include text-variant(base, normal);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .user-username {
+    @include text-variant(sm, normal);
+  }
+}

@@ -52,7 +52,7 @@ interface Emits {
 defineEmits<Emits>()
 </script>
 
-<style scoped>
+<style>
 .empty-state {
   min-height: 40vh;
   display: flex;

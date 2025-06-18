@@ -1,0 +1,47 @@
+// 🏷️ Estilos del componente UserTags optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.user-tags {
+  @include flex-center;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+
+  .v-chip {
+    @include text-variant(xs, medium);
+    @include smooth-transition(all);
+
+    &:hover {
+      @include hover-translate-y(-1px);
+      box-shadow: var(--elevation-1);
+    }
+  }
+}
+
+/* Estilos específicos para diferentes tipos de tags */
+.company-tag {
+  @include chip-base(primary);
+}
+
+.location-tag {
+  @include chip-base(secondary);
+}
+
+/* Variantes de tamaño */
+.user-tags--compact {
+  gap: var(--spacing-xs);
+
+  .v-chip {
+    @include text-variant(xs, medium);
+    height: 24px;
+  }
+}
+
+.user-tags--large {
+  gap: var(--spacing-sm);
+
+  .v-chip {
+    @include text-variant(sm, medium);
+    height: 32px;
+  }
+}

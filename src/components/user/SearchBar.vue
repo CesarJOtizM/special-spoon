@@ -26,7 +26,7 @@
       </template>
     </v-text-field>
 
-    <!-- ��️ Filtros avanzados -->
+    <!-- 🎛️ Filtros avanzados -->
     <AdvancedFilters
       :show="showAdvancedFilters"
       :model-value="filters"
@@ -132,24 +132,3 @@ const toggleAdvancedFilters = () => {
   showAdvancedFilters.value = !showAdvancedFilters.value
 }
 </script>
-
-<style scoped>
-.search-container {
-  width: 100%;
-}
-
-.search-bar {
-  transition: all 0.3s ease;
-}
-
-.search-bar:focus-within {
-  transform: scale(1.02);
-}
-
-/* Mejoras responsive */
-@media (max-width: 600px) {
-  .search-bar :deep(.v-field__input) {
-    font-size: 16px; /* Evita zoom en iOS */
-  }
-}
-</style> 

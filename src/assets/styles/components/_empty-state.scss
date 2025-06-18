@@ -1,0 +1,96 @@
+// 📭 Estilos del componente EmptyState optimizado
+@use "../variables.scss" as *;
+@use "../utilities.scss" as *;
+
+.empty-state {
+  min-height: 40vh;
+  @include flex-column;
+  justify-content: center;
+  align-items: center;
+  @include size-variant(large);
+  text-align: center;
+
+  .v-icon {
+    opacity: 0.6;
+    @include smooth-transition(all);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  &:hover .v-icon {
+    opacity: 1;
+    @include hover-scale(1.05);
+  }
+
+  h3 {
+    margin-bottom: var(--spacing-md);
+    color: rgb(var(--v-theme-on-surface));
+    @include text-variant(lg, semibold);
+  }
+
+  p {
+    margin-bottom: var(--spacing-lg);
+    color: rgba(var(--v-theme-on-surface), 0.7);
+    max-width: 400px;
+    line-height: var(--line-height-relaxed);
+    @include text-variant(base, normal);
+  }
+}
+
+/* Variantes de tamaño */
+.empty-state--compact {
+  min-height: 20vh;
+  @include size-variant(normal);
+
+  .v-icon {
+    margin-bottom: var(--spacing-md);
+  }
+
+  h3 {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  p {
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+.empty-state--large {
+  min-height: 60vh;
+  @include size-variant(large);
+
+  .v-icon {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  h3 {
+    margin-bottom: var(--spacing-lg);
+    @include text-variant(xl, semibold);
+  }
+
+  p {
+    margin-bottom: var(--spacing-xl);
+    @include text-variant(lg, normal);
+  }
+}
+
+/* Responsive */
+@include mobile-only {
+  .empty-state {
+    min-height: 30vh;
+    @include size-variant(normal);
+
+    .v-icon {
+      margin-bottom: var(--spacing-md);
+    }
+
+    h3 {
+      @include text-variant(base, semibold);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    p {
+      @include text-variant(sm, normal);
+      margin-bottom: var(--spacing-md);
+    }
+  }
+}
