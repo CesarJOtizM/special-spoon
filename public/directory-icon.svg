@@ -1,0 +1,16 @@
+favicon
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Carpeta base -->
+  <path
+    d="M64 96C64 78.3269 78.3269 64 96 64H192L240 112H416C433.673 112 448 126.327 448 144V416C448 433.673 433.673 448 416 448H96C78.3269 448 64 433.673 64 416V96Z"
+    fill="#2196F3" />
+
+  <!-- Icono de usuarios dentro de la carpeta -->
+  <circle cx="256" cy="240" r="48" fill="white" />
+  <path d="M176 352C176 308.923 211.923 273 255 273C298.077 273 334 308.923 334 352" stroke="white" stroke-width="32"
+    stroke-linecap="round" />
+
+  <!-- Decoración adicional -->
+  <path d="M64 144H448" stroke="#1976D2" stroke-width="16" />
+</svg>

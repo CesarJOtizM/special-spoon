@@ -6,24 +6,24 @@
     </h3>
     
     <v-list density="compact" class="pa-0">
-      <v-list-item class="contact-item" :style="{ animationDelay: '0.1s' }">
+      <v-list-item :style="{ animationDelay: '0.1s' }">
         <template #prepend>
           <v-icon icon="mdi-phone" color="primary" />
         </template>
-        <v-list-item-title>Teléfono</v-list-item-title>
-        <v-list-item-subtitle>
+        <v-list-item-title class="text-dark">Teléfono</v-list-item-title>
+        <v-list-item-subtitle class="text-dark">
           <a :href="`tel:${user.phone}`" class="contact-link">
             {{ user.phone }}
           </a>
         </v-list-item-subtitle>
       </v-list-item>
 
-      <v-list-item class="contact-item" :style="{ animationDelay: '0.2s' }">
+      <v-list-item :style="{ animationDelay: '0.2s' }">
         <template #prepend>
           <v-icon icon="mdi-web" color="primary" />
         </template>
-        <v-list-item-title>Sitio Web</v-list-item-title>
-        <v-list-item-subtitle>
+        <v-list-item-title class="text-dark">Sitio Web</v-list-item-title>
+        <v-list-item-subtitle class="text-dark">
           <a 
             :href="`https://${user.website}`" 
             target="_blank" 
@@ -36,12 +36,12 @@
         </v-list-item-subtitle>
       </v-list-item>
 
-      <v-list-item class="contact-item" :style="{ animationDelay: '0.3s' }">
+      <v-list-item :style="{ animationDelay: '0.3s' }">
         <template #prepend>
           <v-icon icon="mdi-email" color="primary" />
         </template>
-        <v-list-item-title>Email</v-list-item-title>
-        <v-list-item-subtitle>
+        <v-list-item-title class="text-dark">Email</v-list-item-title>
+        <v-list-item-subtitle class="text-dark">
           <a :href="`mailto:${user.email}`" class="contact-link">
             {{ user.email }}
           </a>

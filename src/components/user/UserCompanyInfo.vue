@@ -10,8 +10,8 @@
         <template #prepend>
           <v-icon icon="mdi-domain" color="secondary" />
         </template>
-        <v-list-item-title>Compañía</v-list-item-title>
-        <v-list-item-subtitle>
+        <v-list-item-title class="text-dark">Compañía</v-list-item-title>
+        <v-list-item-subtitle class="text-dark">
           {{ user.company.name }}
         </v-list-item-subtitle>
       </v-list-item>
@@ -20,8 +20,8 @@
         <template #prepend>
           <v-icon icon="mdi-lightbulb" color="secondary" />
         </template>
-        <v-list-item-title>Eslogan</v-list-item-title>
-        <v-list-item-subtitle>
+        <v-list-item-title class="text-dark">Eslogan</v-list-item-title>
+        <v-list-item-subtitle class="text-dark">
           "{{ user.company.catchPhrase }}"
         </v-list-item-subtitle>
       </v-list-item>
@@ -30,8 +30,8 @@
         <template #prepend>
           <v-icon icon="mdi-map-marker" color="secondary" />
         </template>
-        <v-list-item-title>Dirección</v-list-item-title>
-        <v-list-item-subtitle>
+        <v-list-item-title class="text-dark">Dirección</v-list-item-title>
+        <v-list-item-subtitle class="text-dark">
           {{ formattedAddress }}
         </v-list-item-subtitle>
       </v-list-item>
