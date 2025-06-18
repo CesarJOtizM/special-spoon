@@ -52,12 +52,12 @@
           <!-- Información detallada con animación staggered -->
           <v-row>
             <!-- Columna izquierda: Contacto -->
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="6" class="text-dark">
               <UserContactInfo :user="user" />
             </v-col>
 
             <!-- Columna derecha: Empresa y Dirección -->
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="6" class="text-dark">
               <UserCompanyInfo :user="user" />
             </v-col>
           </v-row>
@@ -66,7 +66,7 @@
           <v-row v-if="user.company?.bs" class="mt-2">
             <v-col cols="12">
               <v-card variant="tonal" color="info" class="business-card">
-                <v-card-text>
+                <v-card-text class="text-dark">
                   <h4 class="text-subtitle-1 mb-2 d-flex align-center">
                     <v-icon icon="mdi-briefcase" class="mr-2" />
                     Actividad Empresarial
