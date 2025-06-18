@@ -3,12 +3,17 @@
   "private": true,
   "type": "module",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force"
+    "type-check": "vue-tsc --build --force",
+    "postinstall": "echo 'Dependencias instaladas correctamente'",
+    "vercel-build": "./build.sh"
   },
   "dependencies": {
     "@fontsource/roboto": "5.2.5",
