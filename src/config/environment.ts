@@ -6,7 +6,7 @@ interface Environment {
 }
 
 export const environment: Environment = {
-  apiUrl: import.meta.env.VITE_API_URL || "https://api.example.com",
+  apiUrl: import.meta.env.VITE_API_URL || "https://jsonplaceholder.typicode.com",
   isDevelopment: import.meta.env.DEV,
   isProduction: import.meta.env.PROD,
   apiTimeout: Number(import.meta.env.VITE_API_TIMEOUT) || 30000,
