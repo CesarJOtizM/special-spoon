@@ -3,6 +3,7 @@ import Components from "unplugin-vue-components/vite";
 import Vue from "@vitejs/plugin-vue";
 import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 import Fonts from "unplugin-fonts/vite";
+import { VitePWA } from "vite-plugin-pwa";
 
 // Utilities
 import { defineConfig } from "vite";
@@ -15,7 +16,7 @@ export default defineConfig({
       template: { transformAssetUrls },
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
-    Vuetify(),
+    Vuetify({ autoImport: true }),
     Components(),
     Fonts({
       fontsource: {
@@ -26,6 +27,27 @@ export default defineConfig({
             styles: ["normal", "italic"],
           },
         ],
+      },
+    }),
+    VitePWA({
+      manifest: {
+        name: "Directorio de Usuarios",
+        short_name: "Directorio",
+        description:
+          "Directorio interactivo de usuarios con búsqueda en tiempo real",
+        theme_color: "#2196F3",
+        icons: [
+          {
+            src: "directory-icon.svg",
+            sizes: "512x512",
+            type: "image/svg+xml",
+            purpose: "any maskable",
+          },
+        ],
+      },
+      includeAssets: ["favicon.ico", "directory-icon.svg"],
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
       },
     }),
   ],
